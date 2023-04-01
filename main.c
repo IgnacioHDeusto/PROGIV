@@ -2,7 +2,13 @@
 #include <stdio.h>
 
 int main() {
-	printf("Hola mundo");
+	printf("Borja gay");
+	printf("Borja gay");
+	printf("Borja gay");
+	printf("Borja gay");
+	printf("Borja gay");
+	printf("Borja gay");
+	printf("Borja gay");
 
 	return 1;
 }
