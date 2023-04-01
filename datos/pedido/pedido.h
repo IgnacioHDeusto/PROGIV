@@ -21,4 +21,6 @@ typedef struct {
 
 void imprimirFecha(Fecha f);
 
+void imprimirPedido(Pedido p);
+
 #endif /* DATOS_PEDIDO_PEDIDO_H_ */

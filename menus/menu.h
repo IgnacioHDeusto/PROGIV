@@ -3,11 +3,15 @@
 #ifndef MENUS_MENU_H_
 #define MENUS_MENU_H_
 
-void MenuGestor();
+char MenuGestor();
 
 char mostrarMenu();
 
 char menuCliente();
+
+char menuAplicacionGestor();
+
+char menuAplicacionCliente();
 
 
 
