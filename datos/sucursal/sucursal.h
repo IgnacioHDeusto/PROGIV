@@ -26,4 +26,6 @@ typedef struct {
     int id_alm;
 }Existencias;
 
+void imprimirAlmacen (Almacen a);
+
 #endif /* DATOS_SUCURSAL_SUCURSAL_H_ */

@@ -26,4 +26,9 @@ typedef struct {
     int cant;
 }Talla;
 
+void imprimirPedido(Pedido p);
+
+void imprimirProducto(Producto p);
+
+
 #endif /* DATOS_PRODUCTO_PRODUCTO_H_ */
