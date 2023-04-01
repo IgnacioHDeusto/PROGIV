@@ -12,4 +12,6 @@ typedef struct {
 
 void imprimirCliente();
 
+void imprimirCarrito();
+
 #endif /* DATOS_CLIENTE_CLIENTE_H_ */

@@ -9,3 +9,12 @@ void imprimirFecha(Fecha f)
 void imprimirPedido(Pedido p){
     printf("Pedido -> N_PEDIDO: %i, FECHA: %i, DNI: %s", p.n_pedido, p.fecha, p.dni);
 }
+
+void imprimirCarrito(Carrito* c)
+{
+	int i;
+	for (i = 0; i < c->numPedidos; ++i) {
+		imprimirPedido(c->pedido[i]);
+	}
+
+}
