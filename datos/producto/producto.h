@@ -1,6 +1,8 @@
 #ifndef DATOS_PRODUCTO_PRODUCTO_H_
 #define DATOS_PRODUCTO_PRODUCTO_H_
 
+#include "datos/pedido/pedido.h"
+
 typedef struct {
 	int id_prod;
 	char* nombre;
@@ -26,9 +28,10 @@ typedef struct {
     int cant;
 }Talla;
 
-void imprimirPedido(Pedido p);
 
 void imprimirProducto(Producto p);
+
+void imprimirPedido(Pedido p);
 
 
 #endif /* DATOS_PRODUCTO_PRODUCTO_H_ */

@@ -1,5 +1,7 @@
 #include "producto.h"
+#include "datos/pedido/pedido.h"
 #include <stdio.h>
+
 
 void imprimirProducto(Producto p){
     printf("Producto -> ID: %i, NOMBRE: %s, PRECIO: %f", p.id_prod, p.nombre, p.precio);
