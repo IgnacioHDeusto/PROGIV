@@ -1,0 +1,67 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "PROVINCIA" (
+	"Codigo_prov"	INTEGER NOT NULL,
+	"Nombre_prov"	TEXT,
+	PRIMARY KEY("Codigo_prov")
+);
+CREATE TABLE IF NOT EXISTS "EXISTENCIAS" (
+	"Stock"	INTEGER,
+	"Id_prod"	INTEGER NOT NULL,
+	"Id_alm"	INTEGER NOT NULL,
+	FOREIGN KEY("Id_prod") REFERENCES "PRODUCTO"("ID_prod"),
+	FOREIGN KEY("Id_alm") REFERENCES "ALMACEN"("Id_alm"),
+	PRIMARY KEY("Id_prod","Id_alm")
+);
+CREATE TABLE IF NOT EXISTS "CATEGORIA" (
+	"Codigo_cat"	INTEGER NOT NULL,
+	"Nombre_cat"	TEXT,
+	PRIMARY KEY("Codigo_cat")
+);
+CREATE TABLE IF NOT EXISTS "PRODUCTO" (
+	"ID_prod"	INTEGER NOT NULL,
+	"Nombre_prod"	TEXT NOT NULL,
+	"Descripcion"	TEXT,
+	"Codigo_cat"	INTEGER NOT NULL,
+	"Precio"	REAL NOT NULL,
+	"Tamaño"	TEXT,
+	FOREIGN KEY("Codigo_cat") REFERENCES "CATEGORIA"("Codigo_cat"),
+	PRIMARY KEY("ID_prod")
+);
+CREATE TABLE IF NOT EXISTS "CIUDAD" (
+	"Codigo_ciu"	INTEGER NOT NULL,
+	"Nombre_ciu"	TEXT,
+	"Codigo_prov"	INTEGER,
+	FOREIGN KEY("Codigo_prov") REFERENCES "PROVINCIA"("Codigo_prov"),
+	PRIMARY KEY("Codigo_ciu")
+);
+CREATE TABLE IF NOT EXISTS "PEDIDO" (
+	"N_PEDIDO"	INTEGER NOT NULL,
+	"Fecha"	TEXT,
+	"Cant_ped"	INTEGER CHECK("Cant_ped" > 0),
+	"DNI_clt"	TEXT NOT NULL,
+	"ID_prod"	INTEGER NOT NULL,
+	FOREIGN KEY("DNI_clt") REFERENCES "CLIENTE"("DNI_clt"),
+	FOREIGN KEY("ID_prod") REFERENCES "PRODUCTO"("ID_prod"),
+	PRIMARY KEY("N_PEDIDO","DNI_clt","ID_prod")
+);
+CREATE TABLE IF NOT EXISTS "ALMACEN" (
+	"Id_alm"	INTEGER NOT NULL,
+	"Nombre"	TEXT,
+	"Direccion"	TEXT,
+	"Tlf_alm"	INTEGER,
+	"Codigo_ciu"	INTEGER,
+	FOREIGN KEY("Codigo_ciu") REFERENCES "CIUDAD"("Codigo_ciu"),
+	PRIMARY KEY("Id_alm")
+);
+CREATE TABLE IF NOT EXISTS "CLIENTE" (
+	"DNI_clt"	TEXT NOT NULL,
+	"Nombre_clt"	TEXT NOT NULL,
+	"Direccion"	TEXT,
+	"Tlf_clt"	INTEGER,
+	"Codigo_ciu"	INTEGER NOT NULL,
+	"Usuario"	TEXT NOT NULL,
+	"Contrasena"	TEXT NOT NULL,
+	FOREIGN KEY("Codigo_ciu") REFERENCES "CIUDAD"("Codigo_ciu"),
+	PRIMARY KEY("DNI_clt","Usuario")
+);
+COMMIT;
