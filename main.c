@@ -1,8 +1,8 @@
-/*
- * main.c
- *
- *  Created on: 1 abr 2023
- *      Author: Ignacio
- */
+#include <stdlib.h>
+#include <stdio.h>
 
+int main() {
+	printf("Hola mundo");
 
+	return 1;
+}
