@@ -3,7 +3,9 @@
 #include <stdlib.h>
 
 char mostrarMenu(){
-    printf("DEUSTO IMPERIO MODA\n");
+
+	printf("------------------\n");
+	printf("DEUSTO IMPERIO MODA\n");
     printf("------------------\n");
     printf("1. Aplicacion cliente \n");
     printf("2. Aplicacion trabajador \n");
@@ -13,12 +15,13 @@ char mostrarMenu(){
     fflush(stdout);
     char linea[10];
     fgets(linea, 10,stdin);
-    return linea;
+    return *linea;
 }
 
-void menuInicioSesion(){
+void menuInicioSesionCliente(){
+	printf("\n");
 	printf("------------------\n");
-    printf("INICIO DE SESION\n");
+    printf("INICIO DE SESION CLIENTE\n");
     printf("------------------\n");
     printf("Nombre de usuario:\n");
     fflush(stdout);
@@ -32,12 +35,16 @@ void menuInicioSesion(){
 }
 
 ///////////////////////////////////////////////
-///////////////MENU GESTOR/////////////////////
+///////////////MENU GESTOR///////////////////
 ///////////////////////////////////////////////
 
 char MenuGestor()
 {
-    printf("1. Iniciar Sesion\n");
+	printf("\n");
+	printf("------------------\n");
+	printf("REGISTRO GESTOR\n");
+	printf("------------------\n");
+	printf("1. Iniciar Sesion como gestor\n");
     printf("2. Registra un nuevo gestor\n");
     printf("Pulsar 'q' para salir \n");
     printf("\n");
@@ -45,12 +52,29 @@ char MenuGestor()
     fflush(stdout);
     char linea[10];
     fgets(linea, 10,stdin);
-    return linea;
+    return *linea;
 }
 
-char menuAplicacionGestor(){
-    printf("MENU GESTOR\n");
+void menuInicioSesionGestor(){
+	printf("\n");
+	printf("------------------\n");
+    printf("INICIO DE SESION GESTOR\n");
     printf("------------------\n");
+    printf("Nombre de usuario:\n");
+    fflush(stdout);
+    char linea[20];
+    fgets(linea, 20, stdin);
+    printf("Constraseña:\n");
+    printf("\n");
+    fflush(stdout);
+    char linea1[20];
+    fgets(linea1, 20,stdin);
+}
+char menuAplicacionGestor(){
+	printf("\n");
+	printf("------------------\n");
+	printf("MENU GESTOR\n");
+	printf("------------------\n");
     printf("1. Gestion de productos\n");
     printf("2. Gestion de usuarios\n");
     printf("3. Borrar base de datos \n");
@@ -60,7 +84,7 @@ char menuAplicacionGestor(){
     fflush(stdout);
     char linea[10];
     fgets(linea, 10,stdin);
-    return linea;
+    return* linea;
 }
 
 ///////////////////////////////////////////////
@@ -68,7 +92,11 @@ char menuAplicacionGestor(){
 ///////////////////////////////////////////////
 
 char menuCliente(){
-    printf("1. Iniciar sesion como cliente \n");
+	printf("\n");
+	printf("------------------\n");
+	printf("REGISTRO CLIENTE\n");
+	printf("------------------\n");
+	printf("1. Iniciar sesion como cliente \n");
     printf("2.Registrarse como nuevo cliente \n");
     printf("Pulsar 'q' para salir \n");
     printf("\n");
@@ -76,11 +104,13 @@ char menuCliente(){
     fflush(stdout);
     char linea[10];
     fgets(linea, 10,stdin);
-    return linea;
+    return* linea;
 }
 
 char menuAplicacionCliente(){
-    printf("MENU CLIENTE\n");
+	printf("\n");
+	printf("------------------\n");
+	printf("MENU CLIENTE\n");
     printf("------------------\n");
     printf("1. Anadir producto a mi carrito\n");
     printf("2. Ver mi carrito\n");
@@ -91,10 +121,12 @@ char menuAplicacionCliente(){
     fflush(stdout);
     char linea[10];
     fgets(linea, 10,stdin);
+
     return *linea;
 }
 
 void menuCrearCuentaCliente(){
+	printf("\n");
 	printf("------------------\n");
     printf("CREAR NUEVA CUENTA\n");
     printf("------------------\n");
@@ -125,9 +157,10 @@ void menuCrearCuentaCliente(){
 }
 
 char menuCarrito(){
-    printf("----------\n");
+	printf("\n");
+	printf("------------------\n");
     printf("CARRITO\n");
-    printf("----------\n");
+    printf("------------------\n");
     printf("1.Confirmar el pedido\n");
     printf("2. Eliminar producto del carrito\n");
     printf("3. Cancelar \n");
@@ -139,4 +172,115 @@ char menuCarrito(){
     return *linea;
 }
 
+void menuCrearCuentaGestor(){
+	printf("\n");
+	printf("------------------\n");
+    printf("CREAR NUEVA CUENTA DE GESTOR\n");
+    printf("------------------\n");
+    printf("Nombre:\n");
+    fflush(stdout);
+    char linea[20];
+    fgets(linea, 20, stdin);
+    printf("Apellido:\n");
+    fflush(stdout);
+    char linea1[20];
+    fgets(linea1, 20,stdin);
+    printf("DNI:\n");
+    fflush(stdout);
+    char linea2[20];
+    fgets(linea2, 20,stdin);
+    printf("Contraseña:\n");
+    fflush(stdout);
+    char linea3[20];
+    fgets(linea3, 20,stdin);
 
+}
+
+void menuAnadirProductoCliente(){
+		printf("------------------\n");
+	    printf("ELIGE UN PRODUCTO\n");
+	    printf("------------------\n");
+	    printf("Codigo del producto:\n");
+	    fflush(stdout);
+	    char linea[20];
+	    fgets(linea, 20, stdin);
+
+}
+
+char menuGestionProductosGestor(){
+	printf("\n");
+		printf("------------------\n");
+		printf("GESTION PRODUCTOS \n");
+	    printf("------------------\n");
+	    printf("1. Lista productos\n");
+	    printf("2. Anadir productos\n");
+	    printf("3. Eliminar productos \n");
+	    printf("4. Consultar stock \n");
+	    printf("5. Aumentar stock \n");
+	    printf("Pulsar 'q' para salir \n");
+	    printf("\n");
+	    printf("Opcion: ");
+	    fflush(stdout);
+	    char linea[10];
+	    fgets(linea, 10,stdin);
+	    return *linea;
+}
+
+char menuGestionUsuariosGestor(){
+	printf("\n");
+			printf("------------------\n");
+			printf("GESTION USUARIOS \n");
+		    printf("------------------\n");
+		    printf("1. Lista usuarios\n");
+		    printf("2. Info pedidos\n");
+		    printf("3. Enviar pedido \n");
+		    printf("4. Consultar stock \n");
+		    printf("Pulsar 'q' para salir \n");
+		    printf("\n");
+		    printf("Opcion: ");
+		    fflush(stdout);
+		    char linea[10];
+		    fgets(linea, 10,stdin);
+		    return *linea;
+}
+void menuAnadirProductoGestor(){
+	printf("\n");
+		printf("------------------\n");
+	    printf("ANADIR PRODUTOS\n");
+	    printf("------------------\n");
+	    printf("ID_Producto:\n");
+	    fflush(stdout);
+	    char linea[20];
+	    fgets(linea, 20, stdin);
+	    printf("Nombre:\n");
+	    fflush(stdout);
+	    char linea1[20];
+	    fgets(linea1, 20,stdin);
+	    printf("Descripcion:\n");
+	    fflush(stdout);
+	    char linea2[20];
+	    fgets(linea2, 20,stdin);
+	    printf("Categoria:\n");
+	    fflush(stdout);
+	    char linea3[20];
+	    fgets(linea3, 20,stdin);
+	    printf("Precio:\n");
+	    fflush(stdout);
+	    char linea4[20];
+	    fgets(linea4, 20,stdin);
+	    printf("Tamaño:\n");
+	    fflush(stdout);
+	    char linea5[20];
+	    fgets(linea5, 20,stdin);
+}
+
+void menuEliminarProductoGestor(){
+	printf("\n");
+	printf("------------------\n");
+	printf("ELIMINAR PRODUTOS\n");
+	printf("------------------\n");
+	printf("ID_Producto:\n");
+	fflush(stdout);
+	char linea[20];
+	fgets(linea, 20, stdin);
+}

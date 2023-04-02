@@ -1,17 +1,30 @@
-
-
 #ifndef MENUS_MENU_H_
 #define MENUS_MENU_H_
 
-char MenuGestor();
+char MenuGestor(); //
 
-char mostrarMenu();
+char mostrarMenu(); //
 
-char menuCliente();
+char menuCliente(); //
 
-char menuAplicacionGestor();
+char menuAplicacionGestor(); //
 
-char menuAplicacionCliente();
+char menuAplicacionCliente(); //
+
+void menuInicioSesionCliente(); //
+
+void menuCrearCuentaGestor(); //
+void menuAnadirProductoCliente();//
+char menuCarrito();//
+char menuAplicacionCliente();//
+void menuInicioSesionGestor();//
+void menuCrearCuentaCliente();//
+char menuGestionProductosGestor();
+char menuGestionUsuariosGestor();
+void menuAnadirProductoGestor();
+void menuEliminarProductoGestor();
+
+
 
 
 
