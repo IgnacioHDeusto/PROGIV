@@ -7,4 +7,8 @@ void insertarCiudades(Ciudad ci);
 
 void insertarProvincias(Provincia prov);
 
+void selectCategoria(int ct);
+
+void selectProvincia(int pr);
+
 #endif /* BD_FUNCIONESBD_H_ */

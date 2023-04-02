@@ -17,17 +17,6 @@ typedef struct {
     char* nombre;
 }Categoria;
 
-//typedef struct {
-//	char* abreviatura;
-//	char* nombre;
-//}Tamayo;
-//
-//typedef struct {
-//	char* abreviatura;
-//    int id_prod;
-//    int cant;
-//}Talla;
-
 
 void imprimirProducto(Producto p);
 
