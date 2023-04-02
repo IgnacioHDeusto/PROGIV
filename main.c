@@ -182,12 +182,12 @@ int main(void) {
 
 								case '1':
 									//LISTA USUARIOS
-									printf("AUMENTAR DE STOCK:");
+									printf("LISTA DE USUARIOS:");
 									break;
 
 								case '2':
 									//INRFORMACION PEDIDO
-									printf("AUMENTAR DE STOCK:");
+									printf("INFORMACION DE PEDIDOS:");
 									break;
 
 								case '3':
