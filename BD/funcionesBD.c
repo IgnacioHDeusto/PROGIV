@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "sqlite3.h"
 #include <string.h>
-#include "./datos/producto/producto.h"
-#include "./datos/sucursal/sucursal.h"
+#include "../datos/sucursal/sucursal.h"
+#include "../sqlite/sqlite3.h"
+#include "../datos/producto/producto.h"
 
 sqlite3 *db;
 sqlite3_stmt *stmt;

@@ -11,8 +11,10 @@
 
 
 int main(void) {
+	//Categoria c = {1, "Hombre"};
+	Provincia prov = {1, "Teruel"};
 	sqlite3 *db;
-	int result = sqlite3_open("BD/TiendaBD.db", &db);
+	int result = sqlite3_open("BD/BDTienda.db", &db);
 	if (result != SQLITE_OK) {
 	printf("Error opening database\n");
 			return result;
@@ -20,6 +22,7 @@ int main(void) {
 			printf("Database opened\n") ;
 
 			//LLAMADA A FUNCIONES BD
+			insertarProvincias(prov);
 
 			result = sqlite3_close(db);
 				if (result != SQLITE_OK) {
