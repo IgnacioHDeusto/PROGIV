@@ -6,9 +6,30 @@
 #include "datos/producto/producto.h"
 #include "datos/sucursal/sucursal.h"
 #include "datos/trabajador/trabajador.h"
+#include "sqlite/sqlite3.h"
+#include <string.h>
 
 
 int main(void) {
+	sqlite3 *db;
+	int result = sqlite3_open("BD/TiendaBD.db", &db);
+	if (result != SQLITE_OK) {
+	printf("Error opening database\n");
+			return result;
+		}
+			printf("Database opened\n") ;
+
+			//LLAMADA A FUNCIONES BD
+
+			result = sqlite3_close(db);
+				if (result != SQLITE_OK) {
+					printf("Error opening database\n");
+					printf("%s\n", sqlite3_errmsg(db));
+					return result;
+				}
+
+				printf("Database closed\n") ;
+
 
 	char opcion;
 	char opcion2;

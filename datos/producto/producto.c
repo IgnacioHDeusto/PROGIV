@@ -8,3 +8,7 @@ void imprimirProducto(Producto p){
     printf("Producto -> ID: %i, NOMBRE: %s, PRECIO: %f", p.id_prod, p.nombre, p.precio);
 }
 
+void imprimirCategoria(Categoria c) {
+	printf("Categoria -> Codigo: %i, Nombre: %s", c.codigo, c.nombre);
+}
+
