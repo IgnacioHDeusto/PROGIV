@@ -145,8 +145,10 @@ int main(void) {
 														switch(opcion8){
 														case '1':
 															//LISTA PRODUCTOS
-															printf("LISTA DE PRODUCTOS:");
-
+															printf("-------------------\n");
+															printf("LISTA DE PRODUCTOS:\n");
+															printf("-------------------\n");
+															ListaProductos();
 															break;
 														case '2':
 															//ANADIR PRODUCTOS

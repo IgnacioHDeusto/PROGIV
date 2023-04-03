@@ -24,6 +24,8 @@ int comprobarUsuario(char* usuario, char* contrasena);
 
 void Mostrarusuarios();
 
+void ListaProductos();
+
 //void crearProducto(char* nombre, char* descripcion, int categoria, int precio, char* tamanyo);
 
 #endif /* BD_FUNCIONESBD_H_ */

@@ -176,6 +176,24 @@ void Mostrarusuario() {
 		sqlite3_finalize(stmt);
 }
 
+void ListaProductos() {
+	sqlite3_open("Tienda.db", &db);
+		char sql[] = "select * from PRODUCTO";
+
+			sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+			printf("\n");
+			printf("Mostrando Productos:\n");
+
+			do {
+				result = sqlite3_step(stmt) ;
+				if (result == SQLITE_ROW) {
+					printf("Producto -> ID: %i --> (%i€) %s", (int) sqlite3_column_int(stmt, 0),(int) sqlite3_column_int(stmt, 4), (char*) sqlite3_column_text(stmt, 1));
+				}
+			} while (result == SQLITE_ROW);
+
+			sqlite3_finalize(stmt);
+}
+
 
 
 //void isWorker(char nombre[], char contrasena[]){
