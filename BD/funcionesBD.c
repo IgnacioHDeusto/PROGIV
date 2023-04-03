@@ -67,6 +67,10 @@ void insertarProvincias(Provincia prov) {
 
 	}
 
+void crearGestor(Traba) {
+
+}
+
 
 void selectCategoria(int ct){
 	sqlite3 *db;
