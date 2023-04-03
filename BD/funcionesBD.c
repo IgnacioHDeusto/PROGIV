@@ -70,29 +70,28 @@ void insertarProvincias(Provincia prov) {
 
 void selectCategoria(int ct){
 	sqlite3 *db;
+	sqlite3_stmt *stmt;
 	Categoria cat1;
+	int result;
 
 	printf("%i", ct);
 
     sqlite3_open("../Tienda.db", &db);
 
-    char sql[] = "SELECT Codigo_cat ,Nombre_cat  FROM CATEGORIA WHERE Codigo_cat = ?";
+    char sql[] = "SELECT * FROM CATEGORIA WHERE Codigo_cat = ?";
 
-    sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+    sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
     sqlite3_bind_int(stmt, 1, ct);
 
     result = sqlite3_step(stmt);
 
-    //if(result == SQLITE_ROW) {
-
+    printf("%i", (int) sqlite3_column_int(stmt, 0));
 
     	cat1.codigo = (int) sqlite3_column_int(stmt, 0);
-    	cat1.nombre = (char*) sqlite3_column_text(stmt, 1);
-    	imprimirCategoria(cat1);
+    	//cat1.nombre = malloc(sizeof(char)*(strlen((char*) sqlite3_column_text(stmt, 1))+1));
+    	//strcpy(cat1.nombre, (char*) sqlite3_column_text(stmt, 1));
     	//printf("%s\n", cat1.nombre);
-//    } else {
-//    	printf("Formato no encontrado");
-//    }
+
 
     sqlite3_finalize(stmt);
 
