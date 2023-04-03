@@ -26,6 +26,12 @@ void Mostrarusuarios();
 
 void ListaProductos();
 
+void BorrarProducto(int id);
+
+void insertarAlmacen(Almacen al);
+
+void BorrarAlmacen(int id);
+
 //void crearProducto(char* nombre, char* descripcion, int categoria, int precio, char* tamanyo);
 
 #endif /* BD_FUNCIONESBD_H_ */

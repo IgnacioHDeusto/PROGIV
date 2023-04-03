@@ -6,6 +6,7 @@ typedef struct {
     char* nombre;
     char* direccion;
     char* telefono;
+    int cod_ciu;
 }Almacen;
 
 typedef struct {

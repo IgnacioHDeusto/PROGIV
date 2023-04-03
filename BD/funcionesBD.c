@@ -194,8 +194,70 @@ void ListaProductos() {
 			sqlite3_finalize(stmt);
 }
 
+void BorrarProducto(int id)
+{
+	sqlite3_open("Tienda.db", &db);
+	char sql[] = "delete from PRODUCTO where ID_prod = ?";
+	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
+	sqlite3_bind_int(stmt, 1, id);
 
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE)
+	{
+		printf("Error borrando producto\n");
+	}else
+	{
+		printf("Producto con ID %i borrado\n", id);
+	}
+
+}
+void BorrarAlmacen(int id)
+{
+	sqlite3_open("Tienda.db", &db);
+	char sql[] = "delete from ALMACEN where Id_alm = ?";
+	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
+
+	sqlite3_bind_int(stmt, 1, id);
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE)
+	{
+		printf("Error borrando almacen\n");
+	}else
+	{
+		printf("Almacen con ID %i borrado\n", id);
+	}
+
+}
+void insertarAlmacen(Almacen al) {
+    sqlite3* db;
+    char error = 0;
+    int rc;
+
+    rc = sqlite3_open("Tienda.db", &db);
+
+    if (rc == SQLITE_OK) {
+    printf("Conexión establecida\n");
+
+    char query[400];
+    sprintf(query, "INSERT INTO ALMACEN ( Id_alm, Nombre, Direccion, Tlf_alm, Codigo_ciu) VALUES (NULL, '%s', '%s', '%s', '%i')", al.nombre, al.direccion, al.telefono, al.cod_ciu);
+
+    rc = sqlite3_exec(db, query, 0, 0, &error);
+
+    if (rc == SQLITE_OK) {
+    printf("Almacen insertado correctamente\n");
+        } else {
+        printf("Error al insertar el almacen: %s\n", error);
+                }
+        } else {
+        printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
+               }
+
+        sqlite3_finalize(stmt);
+        sqlite3_close(db);
+
+}
 //void isWorker(char nombre[], char contrasena[]){
 //    Empleado emp;
 //

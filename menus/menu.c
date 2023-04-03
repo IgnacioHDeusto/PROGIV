@@ -288,7 +288,8 @@ void menuEliminarProductoGestor(){
 	printf("ELIMINAR PRODUTOS\n");
 	printf("------------------\n");
 	printf("ID_Producto:\n");
+	int id = 0;
 	fflush(stdout);
-	char linea[20];
-	fgets(linea, 20, stdin);
+	scanf("%i", &id);
+	BorrarProducto(id);
 }
