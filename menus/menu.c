@@ -55,7 +55,8 @@ char MenuGestor()
     return *linea;
 }
 
-void menuInicioSesionGestor(){
+int menuInicioSesionGestor(){
+	int resultado = 0;
 	printf("\n");
 	printf("------------------\n");
     printf("INICIO DE SESION GESTOR\n");
@@ -69,6 +70,8 @@ void menuInicioSesionGestor(){
     fflush(stdout);
     char linea1[20];
     fgets(linea1, 20,stdin);
+    resultado = comprobarUsuario(linea, linea1);
+    return resultado;
 }
 char menuAplicacionGestor(){
 	printf("\n");

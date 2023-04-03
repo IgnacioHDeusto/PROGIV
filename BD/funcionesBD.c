@@ -6,6 +6,7 @@
 #include "../datos/trabajador/trabajador.h"
 #include <stdlib.h>
 
+sqlite3 *db;
 sqlite3_stmt *stmt;
 int result;
 
@@ -123,8 +124,109 @@ void crearProducto(Producto p){
 			        sqlite3_close(db);
 }
 
+int comprobarUsuario(char usuario[], char contrasena[]) {
+	Trabajador t;
+	int resultado = 0;
+
+	sqlite3_open("Tienda.db", &db);
+
+	char sql[] = "SELECT * FROM TRABAJADOR WHERE Usuario_trab = ? AND Contrasena_trab = ?";
+
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+	sqlite3_bind_text(stmt, 1, usuario, strlen(usuario), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 2, contrasena, strlen(contrasena), SQLITE_STATIC);
+
+	result = sqlite3_step(stmt);
+
+	if(result == SQLITE_ROW) {
+		resultado = 1;
+	} else {
+		resultado = 0;
+	}
+
+	t.cod_trab = (int) sqlite3_column_int(stmt, 0);
+	t.Nombre_trab = (char*) sqlite3_column_text(stmt, 1);
+	t.Contrasena_trab = (char*)  sqlite3_column_text(stmt, 2);
+
+    sqlite3_finalize(stmt);
+
+    sqlite3_close(db);
+
+    return resultado;
+}
+
+//ARREGLAR
+void Mostrarusuario() {
+	sqlite3_open("Tienda.db", &db);
+	char sql[] = "select * from TRABAJADOR";
+
+		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+
+		printf("\n");
+		printf("Mostrando empleados:\n");
+
+		do {
+			result = sqlite3_step(stmt) ;
+			if (result == SQLITE_ROW) {
+				printf("DNI: %i - Nombre Y Apellido: %s\n", (int) sqlite3_column_int(stmt, 0), (char*) sqlite3_column_text(stmt, 1));
+			}
+		} while (result == SQLITE_ROW);
+		printf("\n");
+
+		sqlite3_finalize(stmt);
+}
 
 
+
+//void isWorker(char nombre[], char contrasena[]){
+//    Empleado emp;
+//
+//    sqlite3_open("DeustoAventura.db", &db);
+//
+//    char sql[] = "select * from EMPLEADO where NOMBRE_EMP = ? and CONTRASENA = ?";
+//
+//    sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+//    sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
+//    sqlite3_bind_text(stmt, 2, contrasena, strlen(contrasena), SQLITE_STATIC);
+//
+//    result = sqlite3_step(stmt);
+//
+//
+//    emp.DNI = (char) sqlite3_column_text(stmt, 1);
+//    emp.nombre = (char) sqlite3_column_text(stmt, 2);
+//    emp.apellido = (char) sqlite3_column_text(stmt, 3);
+//    emp.tfno = (int) sqlite3_column_int(stmt, 4);
+//    emp.correo = (char) sqlite3_column_text(stmt, 5);
+//    emp.contrasena = (char) sqlite3_column_text(stmt, 6);
+//    emp.estatus = (char) sqlite3_column_text(stmt, 7);
+//    emp.cod_park = (int) sqlite3_column_text(stmt, 8);
+//    printf("%s\n",emp.estatus);
+//
+//
+//    if(emp.estatus[0] == 'J')
+//        {
+//            printf("Se ha iniciado sesion como JEFE con el alias ");
+//            puts(nombre);
+//
+//            printf("\n");
+//
+//            menuJefe();
+//        } else if(emp.estatus[0] == 'E'){
+//            printf("Se ha iniciado sesion como EMPLEADO con el alias ");
+//            puts(nombre);
+//
+//            printf("\n");
+//
+//            menuEmpleado();
+//        } else {
+//            printf("Empleado no encontrado");
+//            main();
+//        }
+//
+//    sqlite3_finalize(stmt);
+//
+//    sqlite3_close(db);
+//}
 //void selectCategoria(int ct){
 //	sqlite3 *db;
 //	sqlite3_stmt *stmt;

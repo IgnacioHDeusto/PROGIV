@@ -19,7 +19,7 @@ void menuCrearCuentaGestor(); //
 void menuAnadirProductoCliente();//
 char menuCarrito();//
 char menuAplicacionCliente();//
-void menuInicioSesionGestor();//
+int menuInicioSesionGestor();//
 void menuCrearCuentaCliente();//
 char menuGestionProductosGestor();
 char menuGestionUsuariosGestor();

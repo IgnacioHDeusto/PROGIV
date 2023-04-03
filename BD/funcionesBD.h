@@ -20,6 +20,10 @@ void crearGestor(Trabajador t);
 
 void crearProducto(Producto p);
 
+int comprobarUsuario(char* usuario, char* contrasena);
+
+void Mostrarusuarios();
+
 //void crearProducto(char* nombre, char* descripcion, int categoria, int precio, char* tamanyo);
 
 #endif /* BD_FUNCIONESBD_H_ */

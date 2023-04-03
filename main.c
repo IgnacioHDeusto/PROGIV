@@ -12,9 +12,6 @@
 sqlite3 *db;
 
 int main(void) {
-
-
-
 	char opcion;
 	char opcion2;
 	char opcion3;
@@ -22,6 +19,7 @@ int main(void) {
 	char opcion7;
 	char opcion8;
 	char opcion9;
+	int opcionInicioSesionGestor;
 
 
 
@@ -133,91 +131,97 @@ int main(void) {
 				opcion6 = MenuGestor();
 				switch(opcion6){
 				case '1':
-					menuInicioSesionGestor();
+					opcionInicioSesionGestor = menuInicioSesionGestor();
+					if(opcionInicioSesionGestor == 1) {
+						do{
+												opcion7 = menuAplicacionGestor();
+												switch(opcion7){
+												case '1':
+													//GESTIONAR PRODUCTOS
+													//menuGestionProductosGestor();
 
-					do{
-						opcion7 = menuAplicacionGestor();
-						switch(opcion7){
-						case '1':
-							//GESTIONAR PRODUCTOS
-							//menuGestionProductosGestor();
+													do{
+														opcion8 = menuGestionProductosGestor();
+														switch(opcion8){
+														case '1':
+															//LISTA PRODUCTOS
+															printf("LISTA DE PRODUCTOS:");
 
-							do{
-								opcion8 = menuGestionProductosGestor();
-								switch(opcion8){
-								case '1':
-									//LISTA PRODUCTOS
-									printf("LISTA DE PRODUCTOS:");
+															break;
+														case '2':
+															//ANADIR PRODUCTOS
+															menuAnadirProductoGestor();
+															break;
+														case '3':
+															//ELIMINAR PRODUCTOS
+															menuEliminarProductoGestor();
+															break;
+														case '4':
+															//CONSULTAR ALMACENES´
+															printf("LISTA DE ALMACENES:");
+															break;
+														case '5':
+															//CONSULTAR STOCK
+															printf("LISTA DE STOCK:");
+															break;
+														case '6':
+															//AUMENTAR STOCK
+															printf("AUMENTAR DE STOCK:");
+															break;
 
-									break;
-								case '2':
-									//ANADIR PRODUCTOS
-									menuAnadirProductoGestor();
-									break;
-								case '3':
-									//ELIMINAR PRODUCTOS
-									menuEliminarProductoGestor();
-									break;
-								case '4':
-									//CONSULTAR ALMACENES´
-									printf("LISTA DE ALMACENES:");
-									break;
-								case '5':
-									//CONSULTAR STOCK
-									printf("LISTA DE STOCK:");
-									break;
-								case '6':
-									//AUMENTAR STOCK
-									printf("AUMENTAR DE STOCK:");
-									break;
+														case 'q':
 
-								case 'q':
+															break;
+														}
 
-									break;
-								}
+													}while(opcion8 != 'q');
+													break;
+												case '2':
+													//GESTIONAR USUARIOS
+													menuGestionUsuariosGestor();
+													do{
+														opcion9 = menuGestionUsuariosGestor();
+														switch(opcion9){
 
-							}while(opcion8 != 'q');
-							break;
-						case '2':
-							//GESTIONAR USUARIOS
-							menuGestionUsuariosGestor();
-							do{
-								opcion9 = menuGestionUsuariosGestor();
-								switch(opcion9){
+														case '1':
+															//LISTA USUARIOS
+															printf("LISTA DE USUARIOS:");
+															break;
 
-								case '1':
-									//LISTA USUARIOS
-									printf("LISTA DE USUARIOS:");
-									break;
+														case '2':
+															//INRFORMACION PEDIDO
+															printf("INFORMACION DE PEDIDOS:");
+															break;
 
-								case '2':
-									//INRFORMACION PEDIDO
-									printf("INFORMACION DE PEDIDOS:");
-									break;
+														case '3':
+															//ENVIAR PEDIDO
+															printf("AUMENTAR DE STOCK:");
+															break;
 
-								case '3':
-									//ENVIAR PEDIDO
-									printf("AUMENTAR DE STOCK:");
-									break;
-
-								case 'q':
-									break;
-								}
-							}while(opcion9 != 'q');
-							break;
+														case 'q':
+															break;
+														}
+													}while(opcion9 != 'q');
+													break;
 
 
-						case '3':
-							//BORRAR BD
-							printf("Borrar bd");
+												case '3':
+													//BORRAR BD
+													printf("Borrar bd");
 
-						case 'q':
-							break;
+												case 'q':
+													break;
 
-						}
+												}
 
-					}while(opcion7 != 'q');
-					break;
+											}while(opcion7 != 'q');
+											break;
+					} else {
+						printf("Error iniciando sesion, usuario o contraseña incorrectos");
+						break;
+					}
+
+
 
 				case '2':
 					menuCrearCuentaGestor();
