@@ -245,14 +245,11 @@ char menuGestionUsuariosGestor(){
 		    return *linea;
 }
 void menuAnadirProductoGestor(){
+	float precio = 0;
 	printf("\n");
 		printf("------------------\n");
-	    printf("ANADIR PRODUTOS\n");
+	    printf("ANADIR PRODUTO\n");
 	    printf("------------------\n");
-	    printf("ID_Producto:\n");
-	    fflush(stdout);
-	    char linea[20];
-	    fgets(linea, 20, stdin);
 	    printf("Nombre:\n");
 	    fflush(stdout);
 	    char linea1[20];
@@ -261,7 +258,7 @@ void menuAnadirProductoGestor(){
 	    fflush(stdout);
 	    char linea2[20];
 	    fgets(linea2, 20,stdin);
-	    printf("Categoria:\n");
+	    printf("Cod_categoria:\n");
 	    fflush(stdout);
 	    char linea3[20];
 	    fgets(linea3, 20,stdin);
@@ -269,10 +266,13 @@ void menuAnadirProductoGestor(){
 	    fflush(stdout);
 	    char linea4[20];
 	    fgets(linea4, 20,stdin);
+	    precio = atof(linea4);
 	    printf("Tamaño:\n");
 	    fflush(stdout);
 	    char linea5[20];
 	    fgets(linea5, 20,stdin);
+	    Producto p = {NULL, linea1, linea2, linea3, precio, linea5};
+	    crearProducto(p);
 }
 
 void menuEliminarProductoGestor(){

@@ -7,7 +7,7 @@ typedef struct {
 	int id_prod;
 	char* nombre;
 	char* descripcion;
-	char* categoria;
+	int categoria;
     float precio;
     char* tamayo;
 } Producto;

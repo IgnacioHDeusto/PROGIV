@@ -18,4 +18,6 @@ void selectProvincia(int pr);
 
 void crearGestor(Trabajador t);
 
+void crearProducto(Producto p);
+
 #endif /* BD_FUNCIONESBD_H_ */

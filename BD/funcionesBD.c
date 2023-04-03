@@ -96,6 +96,35 @@ void crearGestor(Trabajador t) {
 		        sqlite3_close(db);
 }
 
+void crearProducto(Producto p){
+	 sqlite3 *db;
+		 char* error = 0;
+		 int rc;
+
+			        rc = sqlite3_open("Tienda.db", &db);
+
+			        if (rc == SQLITE_OK) {
+			            printf("Conexión establecida\n");
+
+			            char query[400];
+			            sprintf(query, "INSERT INTO PRODUCTO ( ID_prod, Nombre_prod, Descripcion, Codigo_cat, Precio, Tamaño) VALUES (NULL, '%s', '%s', '%i', '%f', '%s',)", p.nombre, p.descripcion, p.categoria, p.precio, p.tamayo);
+
+			            rc = sqlite3_exec(db, query, 0, 0, &error);
+
+			            if (rc == SQLITE_OK) {
+			                printf("Producto insertado correctamente\n");
+			            } else {
+			                printf("Error al insertar producto: %s\n", error);
+			            }
+			        } else {
+			            printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
+			        }
+
+			        sqlite3_finalize(stmt);
+			        sqlite3_close(db);
+}
+
+
 
 //void selectCategoria(int ct){
 //	sqlite3 *db;
