@@ -222,7 +222,7 @@ int main(void) {
 					break;
 
 				case '2':
-					printf("caso 2");
+					menuCrearCuentaGestor();
 
 				case 'q':
 					break;

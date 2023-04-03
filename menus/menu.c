@@ -177,15 +177,15 @@ void menuCrearCuentaGestor(){
 	printf("------------------\n");
     printf("CREAR NUEVA CUENTA DE GESTOR\n");
     printf("------------------\n");
-    printf("Nombre:\n");
+    printf("Cod_Trabajador:\n");
     fflush(stdout);
     char linea[20];
     fgets(linea, 20, stdin);
-    printf("Apellido:\n");
+    printf("Nombre trabajador:\n");
     fflush(stdout);
     char linea1[20];
     fgets(linea1, 20,stdin);
-    printf("DNI:\n");
+    printf("Apellido:\n");
     fflush(stdout);
     char linea2[20];
     fgets(linea2, 20,stdin);
