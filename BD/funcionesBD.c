@@ -5,7 +5,6 @@
 #include "../datos/producto/producto.h"
 #include <stdlib.h>
 
-sqlite3 *db;
 sqlite3_stmt *stmt;
 int result;
 
@@ -39,24 +38,6 @@ void insertarCategoria(Categoria c) {
    	        sqlite3_close(db);
 }
 
-void insertarCiudades(Ciudad ci) {
-	char sql[] = "insert into CIUDAD (Codigo_ciu, Nombre_ciu, Codigo_prov) values (NULL, ?,?)";
-
-	    sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL);
-	    sqlite3_bind_text(stmt, 1, ci.nombre, strlen(ci.nombre), SQLITE_STATIC);
-	    sqlite3_bind_int(stmt, 2, ci.cod_provincia);
-
-	    result = sqlite3_step(stmt);
-	        if (result != SQLITE_DONE) {
-	            printf("Error insertando la Ciudad\n");
-	        }else{
-	            printf("Ciudad INSERTADA\n");
-	            imprimirCiudad(ci);
-	        }
-
-	        sqlite3_finalize(stmt);
-}
-
 void insertarProvincias(Provincia prov) {
 	 sqlite3 *db;
 	 char* error = 0;
@@ -88,7 +69,8 @@ void insertarProvincias(Provincia prov) {
 
 
 void selectCategoria(int ct){
-	Categoria *cat1;
+	sqlite3 *db;
+	Categoria cat1;
 
 	printf("%i", ct);
 
@@ -104,8 +86,8 @@ void selectCategoria(int ct){
     //if(result == SQLITE_ROW) {
 
 
-    	cat1->codigo = (int) sqlite3_column_int(stmt, 0);
-    	cat1->nombre = (char*) sqlite3_column_text(stmt, 1);
+    	cat1.codigo = (int) sqlite3_column_int(stmt, 0);
+    	cat1.nombre = (char*) sqlite3_column_text(stmt, 1);
     	imprimirCategoria(cat1);
     	//printf("%s\n", cat1.nombre);
 //    } else {

@@ -9,8 +9,6 @@ void insertarProvincias(Provincia prov);
 
 void selectCategoria(int ct);
 
-//int selectCategoria(sqlite3 *db, int ct);
-
 void selectProvincia(int pr);
 
 #endif /* BD_FUNCIONESBD_H_ */
