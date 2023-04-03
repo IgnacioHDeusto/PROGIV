@@ -121,6 +121,7 @@ void crearProducto(Producto p){
 			        }
 
 			        sqlite3_finalize(stmt);
+			        fflush(stdout);
 			        sqlite3_close(db);
 }
 

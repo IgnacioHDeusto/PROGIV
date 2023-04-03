@@ -231,7 +231,7 @@ char menuGestionProductosGestor(){
 }
 
 char menuGestionUsuariosGestor(){
-	printf("\n");
+			printf("\n");
 			printf("------------------\n");
 			printf("GESTION USUARIOS \n");
 		    printf("------------------\n");
@@ -248,36 +248,34 @@ char menuGestionUsuariosGestor(){
 		    return *linea;
 }
 void menuAnadirProductoGestor(){
-	float precio = 0;
-	int categoria = 0;
-	printf("\n");
+		printf("\n");
 		printf("------------------\n");
 	    printf("ANADIR PRODUTO\n");
 	    printf("------------------\n");
 	    printf("Nombre:\n");
 	    fflush(stdout);
-	    char linea1[20];
-	    fgets(linea1, 20,stdin);
+	    char nombre[20];
+	    scanf("%s", nombre);
 	    printf("Descripcion:\n");
 	    fflush(stdout);
-	    char linea2[20];
-	    fgets(linea2, 20,stdin);
+	    char desc[20];
+	    scanf("%s", desc);
 	    printf("Cod_categoria:\n");
 	    fflush(stdout);
-	    char linea3[20];
-	    fgets(linea3, 20,stdin);
-	    categoria = atoi(linea3);
+	    int categoria = 0;
+	    scanf("%i", &categoria);
 	    printf("Precio:\n");
+	    float precio = 0;
 	    fflush(stdout);
-	    char linea4[20];
-	    fgets(linea4, 20,stdin);
-	    precio = atoi(linea4);
+	    scanf("%f", &precio);
 	    printf("Tamaño:\n");
+	    char tamanyo[20];
 	    fflush(stdout);
-	    char linea5[20];
-	    fgets(linea5, 20,stdin);
-	    Producto p = {NULL, linea1, linea2, categoria, precio, linea5};
+	   	scanf("%s", tamanyo);
+	   	fflush(stdout);
+	    Producto p = {NULL, nombre, desc, categoria, precio, tamanyo};
 	   // printf("%i,%i,%s",categoria, precio, linea5);
+
 	    crearProducto(p);
 	   // crearProducto(linea1, linea2, categoria, precio, linea5);
 }

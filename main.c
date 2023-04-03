@@ -12,9 +12,6 @@
 sqlite3 *db;
 
 int main(void) {
-	Almacen al = {NULL,"Almacen Pedro", "Calle Mayor 12, 28001 Madrid", "+34 911 234 567", 1};
-
-	insertarAlmacen(al);
 	char opcion;
 	char opcion2;
 	char opcion3;
