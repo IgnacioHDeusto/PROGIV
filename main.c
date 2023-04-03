@@ -186,8 +186,10 @@ int main(void) {
 														switch(opcion9){
 
 														case '1':
-															//LISTA USUARIOS
-															printf("LISTA DE USUARIOS:");
+															printf("------------------\n");
+															printf("LISTA DE USUARIOS:\n");
+															printf("------------------\n");
+															MostrarTrabajadores();
 															break;
 
 														case '2':

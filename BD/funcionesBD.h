@@ -22,7 +22,7 @@ void crearProducto(Producto p);
 
 int comprobarUsuario(char* usuario, char* contrasena);
 
-void Mostrarusuarios();
+void MostrarTrabajadores();
 
 void ListaProductos();
 

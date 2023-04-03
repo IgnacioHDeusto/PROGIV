@@ -250,7 +250,7 @@ char menuGestionUsuariosGestor(){
 void menuAnadirProductoGestor(){
 		printf("\n");
 		printf("------------------\n");
-	    printf("ANADIR PRODUTO\n");
+	    printf("ANADIR PRODUCTO\n");
 	    printf("------------------\n");
 	    printf("Nombre:\n");
 	    fflush(stdout);
@@ -272,10 +272,10 @@ void menuAnadirProductoGestor(){
 	    char tamanyo[20];
 	    fflush(stdout);
 	   	scanf("%s", tamanyo);
-	   	fflush(stdout);
+
 	    Producto p = {NULL, nombre, desc, categoria, precio, tamanyo};
 	   // printf("%i,%i,%s",categoria, precio, linea5);
-
+	    fflush(stdin);
 	    crearProducto(p);
 	   // crearProducto(linea1, linea2, categoria, precio, linea5);
 }
@@ -283,11 +283,12 @@ void menuAnadirProductoGestor(){
 void menuEliminarProductoGestor(){
 	printf("\n");
 	printf("------------------\n");
-	printf("ELIMINAR PRODUTOS\n");
+	printf("ELIMINAR PRODUCTOS\n");
 	printf("------------------\n");
 	printf("ID_Producto:\n");
 	int id = 0;
 	fflush(stdout);
 	scanf("%i", &id);
+	fflush(stdin);
 	BorrarProducto(id);
 }
