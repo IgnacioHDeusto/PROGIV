@@ -193,7 +193,8 @@ void menuCrearCuentaGestor(){
     fflush(stdout);
     char linea3[20];
     fgets(linea3, 20,stdin);
-
+    Trabajador t = {NULL, linea1, linea3};
+    crearGestor(t);
 }
 
 void menuAnadirProductoCliente(){

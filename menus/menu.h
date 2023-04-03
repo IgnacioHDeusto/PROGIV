@@ -1,6 +1,8 @@
 #ifndef MENUS_MENU_H_
 #define MENUS_MENU_H_
 
+#include "../BD/funcionesBD.h"
+
 char MenuGestor(); //
 
 char mostrarMenu(); //

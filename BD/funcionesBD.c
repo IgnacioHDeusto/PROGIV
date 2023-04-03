@@ -73,7 +73,7 @@ void crearGestor(Trabajador t) {
 	 char* error = 0;
 	 int rc;
 
-		        rc = sqlite3_open("TIENDACRACK.db", &db);
+		        rc = sqlite3_open("Tienda.db", &db);
 
 		        if (rc == SQLITE_OK) {
 		            printf("Conexión establecida\n");

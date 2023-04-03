@@ -223,7 +223,7 @@ int main(void) {
 
 				case '2':
 					menuCrearCuentaGestor();
-
+					break;
 				case 'q':
 					break;
 
