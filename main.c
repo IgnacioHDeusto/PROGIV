@@ -12,15 +12,8 @@
 sqlite3 *db;
 
 int main(void) {
-	Provincia prov = {1, "Teruel"};
-	Provincia prov2 = {2, "Bilbao"};
-	Categoria cat = {3, "Unisex"};
-
-	//insertarProvincias(prov2);
-	//selectProvincia(prov.codigo);
-	//insertarCategoria(cat);
-	selectCategoria(cat.codigo);
-	//selectCategoria(3);
+	Trabajador t1 = {1,"Ignacio", "123"};
+	crearGestor(t1);
 
 
 

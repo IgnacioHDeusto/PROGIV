@@ -3,6 +3,7 @@
 #include "../datos/sucursal/sucursal.h"
 #include "../sqlite/sqlite3.h"
 #include "../datos/producto/producto.h"
+#include "../datos/trabajador/trabajador.h"
 #include <stdlib.h>
 
 sqlite3_stmt *stmt;
@@ -67,40 +68,64 @@ void insertarProvincias(Provincia prov) {
 
 	}
 
-void crearGestor(Traba) {
+void crearGestor(Trabajador t) {
+	 sqlite3 *db;
+	 char* error = 0;
+	 int rc;
 
+		        rc = sqlite3_open("TIENDACRACK.db", &db);
+
+		        if (rc == SQLITE_OK) {
+		            printf("Conexión establecida\n");
+
+		            char query[400];
+		            sprintf(query, "INSERT INTO TRABAJADOR ( Cod_trab, Usuario_trab, Contrasena_trab) VALUES (NULL, '%s', '%s')", t.Nombre_trab, t.Contrasena_trab);
+
+		            rc = sqlite3_exec(db, query, 0, 0, &error);
+
+		            if (rc == SQLITE_OK) {
+		                printf("Trabajador insertado correctamente\n");
+		            } else {
+		                printf("Error al insertar trabajador: %s\n", error);
+		            }
+		        } else {
+		            printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
+		        }
+
+		        sqlite3_finalize(stmt);
+		        sqlite3_close(db);
 }
 
 
-void selectCategoria(int ct){
-	sqlite3 *db;
-	sqlite3_stmt *stmt;
-	Categoria cat1;
-	int result;
-
-	printf("%i", ct);
-
-    sqlite3_open("../Tienda.db", &db);
-
-    char sql[] = "SELECT * FROM CATEGORIA WHERE Codigo_cat = ?";
-
-    sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
-    sqlite3_bind_int(stmt, 1, ct);
-
-    result = sqlite3_step(stmt);
-
-    printf("%i", (int) sqlite3_column_int(stmt, 0));
-
-    	cat1.codigo = (int) sqlite3_column_int(stmt, 0);
-    	//cat1.nombre = malloc(sizeof(char)*(strlen((char*) sqlite3_column_text(stmt, 1))+1));
-    	//strcpy(cat1.nombre, (char*) sqlite3_column_text(stmt, 1));
-    	//printf("%s\n", cat1.nombre);
-
-
-    sqlite3_finalize(stmt);
-
-    sqlite3_close(db);
-}
+//void selectCategoria(int ct){
+//	sqlite3 *db;
+//	sqlite3_stmt *stmt;
+//	Categoria cat1;
+//	int result;
+//
+//	printf("%i", ct);
+//
+//    sqlite3_open("../Tienda.db", &db);
+//
+//    char sql[] = "SELECT * FROM CATEGORIA WHERE Codigo_cat = ?";
+//
+//    sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
+//    sqlite3_bind_int(stmt, 1, ct);
+//
+//    result = sqlite3_step(stmt);
+//
+//    printf("%i", (int) sqlite3_column_int(stmt, 0));
+//
+//    	cat1.codigo = (int) sqlite3_column_int(stmt, 0);
+//    	//cat1.nombre = malloc(sizeof(char)*(strlen((char*) sqlite3_column_text(stmt, 1))+1));
+//    	//strcpy(cat1.nombre, (char*) sqlite3_column_text(stmt, 1));
+//    	//printf("%s\n", cat1.nombre);
+//
+//
+//    sqlite3_finalize(stmt);
+//
+//    sqlite3_close(db);
+//}
 
 
 //void selectProvincia(int pr) {

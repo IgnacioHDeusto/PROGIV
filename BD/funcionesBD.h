@@ -11,4 +11,6 @@ void selectCategoria(int ct);
 
 void selectProvincia(int pr);
 
+void crearGestor(Trabajador t);
+
 #endif /* BD_FUNCIONESBD_H_ */
