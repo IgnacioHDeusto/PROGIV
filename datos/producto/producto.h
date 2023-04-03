@@ -8,7 +8,7 @@ typedef struct {
 	char* nombre;
 	char* descripcion;
 	int categoria;
-    float precio;
+    int precio;
     char* tamayo;
 } Producto;
 

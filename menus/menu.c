@@ -246,6 +246,7 @@ char menuGestionUsuariosGestor(){
 }
 void menuAnadirProductoGestor(){
 	float precio = 0;
+	int categoria = 0;
 	printf("\n");
 		printf("------------------\n");
 	    printf("ANADIR PRODUTO\n");
@@ -262,17 +263,20 @@ void menuAnadirProductoGestor(){
 	    fflush(stdout);
 	    char linea3[20];
 	    fgets(linea3, 20,stdin);
+	    categoria = atoi(linea3);
 	    printf("Precio:\n");
 	    fflush(stdout);
 	    char linea4[20];
 	    fgets(linea4, 20,stdin);
-	    precio = atof(linea4);
+	    precio = atoi(linea4);
 	    printf("Tamaño:\n");
 	    fflush(stdout);
 	    char linea5[20];
 	    fgets(linea5, 20,stdin);
-	    Producto p = {NULL, linea1, linea2, linea3, precio, linea5};
+	    Producto p = {NULL, linea1, linea2, categoria, precio, linea5};
+	   // printf("%i,%i,%s",categoria, precio, linea5);
 	    crearProducto(p);
+	   // crearProducto(linea1, linea2, categoria, precio, linea5);
 }
 
 void menuEliminarProductoGestor(){

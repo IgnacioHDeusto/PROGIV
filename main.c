@@ -12,8 +12,6 @@
 sqlite3 *db;
 
 int main(void) {
-	Trabajador t1 = {1,"Ignacio", "123"};
-	crearGestor(t1);
 
 
 

@@ -97,7 +97,7 @@ void crearGestor(Trabajador t) {
 }
 
 void crearProducto(Producto p){
-	 sqlite3 *db;
+	     sqlite3 *db;
 		 char* error = 0;
 		 int rc;
 
@@ -107,8 +107,7 @@ void crearProducto(Producto p){
 			            printf("Conexión establecida\n");
 
 			            char query[400];
-			            sprintf(query, "INSERT INTO PRODUCTO ( ID_prod, Nombre_prod, Descripcion, Codigo_cat, Precio, Tamaño) VALUES (NULL, '%s', '%s', '%i', '%f', '%s',)", p.nombre, p.descripcion, p.categoria, p.precio, p.tamayo);
-
+			            sprintf(query, "INSERT INTO PRODUCTO ( ID_prod, Nombre_prod, Descripcion, Codigo_cat, Precio, Tamaño) VALUES (NULL, '%s', '%s', '%i', '%i', '%s')", p.nombre, p.descripcion, p.categoria, p.precio, p.tamayo);
 			            rc = sqlite3_exec(db, query, 0, 0, &error);
 
 			            if (rc == SQLITE_OK) {
