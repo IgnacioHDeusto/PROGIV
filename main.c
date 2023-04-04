@@ -209,7 +209,6 @@ int main(void) {
 															//ENVIAR PEDIDO
 															printf("ENVIAR PEDIDO:\n");
 															break;
-
 														case '4':
 															//CONSULTAR STOCK
 															printf("\n");
