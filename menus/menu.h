@@ -25,6 +25,8 @@ char menuGestionProductosGestor();
 char menuGestionUsuariosGestor();
 void menuAnadirProductoGestor();
 void menuEliminarProductoGestor();
+void menuAumentarStock();
+void menuEnviarPedido();
 
 
 

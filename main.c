@@ -208,6 +208,7 @@ int main(void) {
 														case '3':
 															//ENVIAR PEDIDO
 															printf("ENVIAR PEDIDO:\n");
+															menuEnviarPedido();
 															break;
 														case '4':
 															//CONSULTAR STOCK
@@ -223,11 +224,6 @@ int main(void) {
 														}
 													}while(opcion9 != 'q');
 													break;
-
-
-												case '3':
-													//BORRAR BD
-													printf("Borrar bd");
 
 												case 'q':
 													break;

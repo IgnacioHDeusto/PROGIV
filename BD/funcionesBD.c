@@ -527,12 +527,16 @@ void BorrarPedido(int id)
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE)
 	{
-		printf("Error borrando pedido\n");
+		printf("Error enviando pedido\n");
 	}else
 	{
-		printf("Pedido con ID %i borrado\n", id);
+		printf("Pedido con ID %i enviado\n", id);
 	}
 
 	sqlite3_finalize(stmt);
 	sqlite3_close(db);
+}
+
+void EnviarPedido(){
+
 }

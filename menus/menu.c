@@ -80,7 +80,6 @@ char menuAplicacionGestor(){
 	printf("------------------\n");
     printf("1. Gestion de productos\n");
     printf("2. Gestion de usuarios\n");
-    printf("3. Borrar base de datos \n");
     printf("Pulsar 'q' para salir \n");
     printf("\n");
     printf("Opcion: ");
@@ -306,4 +305,26 @@ void menuAumentarStock(){
 
 	fflush(stdin);
 	aumentarStock(stock, id_prod, id_alm);
+}
+
+void menuEnviarPedido(){
+	listaPedidos();
+
+	printf("\n-------------------\n");
+	printf("ENVIAR PEDIDO:");
+	printf("-------------------\n");
+
+	printf("Introduce el Nº que quieres enviar:");
+	int n_ped = 0;
+	fflush(stdout);
+	scanf("%i", &n_ped);
+	printf("¿Confirmar envio? (s/n)");
+	char conf[20];
+	fflush(stdout);
+	scanf("%s", conf);
+	if (strcmp(conf, "s")) {
+		printf("Enviando pedido...");
+		fflush(stdin);
+		BorrarPedido(n_ped);
+	}
 }
