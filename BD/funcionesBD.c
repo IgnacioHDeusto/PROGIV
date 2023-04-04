@@ -9,6 +9,8 @@
 
 sqlite3 *db;
 sqlite3_stmt *stmt;
+sqlite3_stmt *stmt2;
+sqlite3_stmt *stmt3;
 int result;
 
 void insertarCategoria(Categoria c) {
@@ -359,7 +361,6 @@ void aumentarStock(int stock, int id_prod, int id_alm) {
     int rc;
 
     rc = sqlite3_open("Tienda.db", &db);
-    printf("%i\n", stock);
     if (rc == SQLITE_OK) {
     printf("Conexión establecida\n");
     int resultado = comprobarStock(id_prod, id_alm);
@@ -374,7 +375,7 @@ void aumentarStock(int stock, int id_prod, int id_alm) {
 		result = sqlite3_step(stmt);
 		if (result != SQLITE_DONE)
 		{
-			printf("Error añadiendo stock\n");
+			printf("Error añadiendo stock \n");
 		}else
 		{
 			printf("%i unidades del producto %i en el almacen %i añadidas\n", stock, id_prod, id_alm);
@@ -562,32 +563,64 @@ int comprobarPedido(int n_ped) {
     return resultado;
 }
 
-CompraProducto* productosPedido(int n_ped){
+int productosPedido(int n_ped){
 	sqlite3_open("Tienda.db", &db);
-	char sql[] = "select * from COMPRA_PRDCT WHERE N_PEDIDO = ?";
-	int i = 0;
+	char sql[] = "SELECT P.N_PEDIDO, P.Fecha, P.DNI_clt, CP.ID_prod, CP.Cantidad FROM COMPRA_PRDCT CP, PEDIDO P WHERE CP.N_PEDIDO = ? AND CP.N_PEDIDO = P.N_PEDIDO" ;
 
 	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
 	sqlite3_bind_int(stmt, 1, n_ped);
 	printf("Mostrando productos del pedido %i:\n", n_ped);
-	CompraProducto* Compra_prod = malloc(sizeof(CompraProducto)*100);
-
+	int i = 0;
+	int j[100];
 	do {
 		result = sqlite3_step(stmt);
 
-		if (result == SQLITE_ROW) {
-			CompraProducto p = {(int) sqlite3_column_int(stmt, 0), (int) sqlite3_column_int(stmt, 1), (int) sqlite3_column_int(stmt, 2)};
-			Compra_prod[i] = p;
-			i++;
+		if (i == 0) {
+			printf("Pedido: %i, Fecha: %s, DNI: %s (  ", (int)sqlite3_column_int(stmt, 0), (char*)sqlite3_column_text(stmt, 1), (char*)sqlite3_column_text(stmt, 2));
 		}
+		if (result == SQLITE_ROW) {
+			int id_prod = (int)sqlite3_column_int(stmt, 3);
+			j[i] = id_prod;
+			printf("Producto: %i --> Cantidad: %i  ", id_prod, (int)sqlite3_column_int(stmt, 4));
+
+		}
+		i++;
+
 	} while (result == SQLITE_ROW);
+	i--;
+	printf(")\n");
 
 	sqlite3_finalize(stmt);
 	sqlite3_close(db);
-
-	return Compra_prod;
+	int f = 0;
+	for (int k = 0; k < i; ++k) {
+		f = ComprobarStockPedido(j[k], n_ped, i, f);
+	}
+	if (f == i) {
+		for (int k = 0; k < i; ++k) {
+				ComprobarStockPedido(j[k], n_ped, -1, 0);
+		}
+	}
+	return i;
 }
 
+//	sqlite3_open("Tienda.db", &db);
+//	char sql[] = "SELECT CP.ID_prod, CP.N_PEDIDO, CP.CANTIDAD, E.Stock, E.Id_alm FROM COMPRA_PRDCT CP, EXISTENCIAS E WHERE CP.N_PEDIDO = ? AND CP.ID_Prod = E.Id_prod" ;
+//
+//	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+//	sqlite3_bind_int(stmt, 1, n_ped);
+//	printf("Mostrando productos del pedido %i:\n", n_ped);
+//
+//	do {
+//		result = sqlite3_step(stmt);
+//
+//		if (result == SQLITE_ROW) {
+//			printf("Prod: %i, Ped: %i, Cant: %i, Stock: %i, Alm: %i\n", (int)sqlite3_column_int(stmt, 0), (int)sqlite3_column_int(stmt, 1), (int)sqlite3_column_int(stmt, 2), (int)sqlite3_column_int(stmt, 3), (int)sqlite3_column_int(stmt, 4));
+//		}
+//	} while (result == SQLITE_ROW);
+//
+//	sqlite3_finalize(stmt);
+//	sqlite3_close(db);
 void insertarCompraProd(CompraProducto cp) {
     sqlite3* db;
     char error = 0;
@@ -635,4 +668,37 @@ void BorrarCompraProd(int id_prod, int n_ped){
 			sqlite3_finalize(stmt);
 
 			sqlite3_close(db);
+}
+int ComprobarStockPedido(int id_prod, int n_ped, int j, int i){
+		sqlite3_open("Tienda.db", &db);
+		char sql[] = "SELECT CP.ID_prod, CP.Cantidad, E.Id_alm, E.Stock FROM COMPRA_PRDCT CP, EXISTENCIAS E WHERE CP.N_PEDIDO = ? AND CP.ID_prod = ? AND CP.ID_prod = E.Id_prod AND CP.Cantidad < E.Stock GROUP BY CP.Id_prod" ;
+		int cant = 0;
+		int id_alm = 0;
+		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt2, NULL) ;
+		sqlite3_bind_int(stmt2, 1, n_ped);
+		sqlite3_bind_int(stmt2, 2, id_prod);
+		do {
+			result = sqlite3_step(stmt2);
+			if (result == SQLITE_ROW) {
+				if (j == -1) {
+					cant = -(int)sqlite3_column_int(stmt2, 1);
+					id_alm = (int)sqlite3_column_int(stmt2, 2);
+				}else{
+					printf("Producto: %i --> Cantidad: %i, Almacen: %i --> Stock: %i\n", (int)sqlite3_column_int(stmt2, 0), (int)sqlite3_column_int(stmt2, 1), (int)sqlite3_column_int(stmt2, 2), (int)sqlite3_column_int(stmt2, 3));
+					i++;
+				}
+			}
+
+
+		} while (result == SQLITE_ROW);
+		sqlite3_finalize(stmt2);
+		sqlite3_close(db);
+		if (j == -1) {
+			aumentarStock(cant, id_prod, id_alm);
+		}
+		return i;
+}
+
+void comprobarStockPedido(){
+
 }

@@ -54,6 +54,10 @@ void EnviarPedido(int id);
 int comprobarPedido(int n_ped);
 
 void BorrarCompraProd(int id_prod, int n_ped);
+
+void ComprobarStockPedido(int id_prod, int n_ped, int j, int i);
+
+void ComprobarStockPedido();
 //void crearProducto(char* nombre, char* descripcion, int categoria, int precio, char* tamanyo);
 
 #endif /* BD_FUNCIONESBD_H_ */
