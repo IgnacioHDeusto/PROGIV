@@ -329,14 +329,7 @@ void menuEnviarPedido(){
 		if (comp == 0){
 				printf("No existe ese pedido");
 		}else {
-			printf("Enviando pedido...\n");
 			int numProd = productosPedido(n_ped);
-			for (int i = 0; i < numProd; ++i) {
-
-			}
-
-
-			EnviarPedido(n_ped);
 		}
 
 	}

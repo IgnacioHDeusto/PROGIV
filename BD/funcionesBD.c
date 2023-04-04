@@ -9,8 +9,6 @@
 
 sqlite3 *db;
 sqlite3_stmt *stmt;
-sqlite3_stmt *stmt2;
-sqlite3_stmt *stmt3;
 int result;
 
 void insertarCategoria(Categoria c) {
@@ -373,13 +371,16 @@ void aumentarStock(int stock, int id_prod, int id_alm) {
 		sqlite3_bind_int(stmt, 3, id_alm);
 
 		result = sqlite3_step(stmt);
-		if (result != SQLITE_DONE)
-		{
-			printf("Error añadiendo stock \n");
-		}else
-		{
-			printf("%i unidades del producto %i en el almacen %i añadidas\n", stock, id_prod, id_alm);
+		if (stock > 0) {
+			if (result != SQLITE_DONE)
+			{
+				printf("Error añadiendo stock \n");
+			}else
+			{
+				printf("%i unidades del producto %i en el almacen %i añadidas\n", stock, id_prod, id_alm);
+			}
 		}
+
 	} else {
 		char query[400];
 		sprintf(query, "INSERT INTO EXISTENCIAS (Stock, Id_prod, Id_alm) VALUES ('%i', '%i', '%i')", stock, id_prod, id_alm);
@@ -526,13 +527,6 @@ void EnviarPedido(int id)
 	sqlite3_bind_int(stmt, 1, id);
 
 	result = sqlite3_step(stmt);
-	if (result != SQLITE_DONE)
-	{
-		printf("Error enviando pedido\n");
-	}else
-	{
-		printf("Pedido con ID %i enviado\n", id);
-	}
 
 	sqlite3_finalize(stmt);
 	sqlite3_close(db);
@@ -598,29 +592,19 @@ int productosPedido(int n_ped){
 	}
 	if (f == i) {
 		for (int k = 0; k < i; ++k) {
+			if (k == i-1) {
+				ComprobarStockPedido(j[k], n_ped, -1, -1);
+			} else {
 				ComprobarStockPedido(j[k], n_ped, -1, 0);
+			}
+
 		}
+	} else {
+		printf("Falta stock para los productos del pedido nº%i\n", n_ped);
 	}
 	return i;
 }
 
-//	sqlite3_open("Tienda.db", &db);
-//	char sql[] = "SELECT CP.ID_prod, CP.N_PEDIDO, CP.CANTIDAD, E.Stock, E.Id_alm FROM COMPRA_PRDCT CP, EXISTENCIAS E WHERE CP.N_PEDIDO = ? AND CP.ID_Prod = E.Id_prod" ;
-//
-//	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
-//	sqlite3_bind_int(stmt, 1, n_ped);
-//	printf("Mostrando productos del pedido %i:\n", n_ped);
-//
-//	do {
-//		result = sqlite3_step(stmt);
-//
-//		if (result == SQLITE_ROW) {
-//			printf("Prod: %i, Ped: %i, Cant: %i, Stock: %i, Alm: %i\n", (int)sqlite3_column_int(stmt, 0), (int)sqlite3_column_int(stmt, 1), (int)sqlite3_column_int(stmt, 2), (int)sqlite3_column_int(stmt, 3), (int)sqlite3_column_int(stmt, 4));
-//		}
-//	} while (result == SQLITE_ROW);
-//
-//	sqlite3_finalize(stmt);
-//	sqlite3_close(db);
 void insertarCompraProd(CompraProducto cp) {
     sqlite3* db;
     char error = 0;
@@ -661,9 +645,6 @@ void BorrarCompraProd(int id_prod, int n_ped){
 			if (result != SQLITE_DONE)
 			{
 				printf("Error borrando compra de producto\n");
-			}else
-			{
-				printf("Compra del producto %i del pedido %i borrado\n", id_prod, n_ped);
 			}
 			sqlite3_finalize(stmt);
 
@@ -671,34 +652,59 @@ void BorrarCompraProd(int id_prod, int n_ped){
 }
 int ComprobarStockPedido(int id_prod, int n_ped, int j, int i){
 		sqlite3_open("Tienda.db", &db);
-		char sql[] = "SELECT CP.ID_prod, CP.Cantidad, E.Id_alm, E.Stock FROM COMPRA_PRDCT CP, EXISTENCIAS E WHERE CP.N_PEDIDO = ? AND CP.ID_prod = ? AND CP.ID_prod = E.Id_prod AND CP.Cantidad < E.Stock GROUP BY CP.Id_prod" ;
+		char sql[] = "SELECT CP.ID_prod, CP.Cantidad, E.Id_alm, E.Stock FROM COMPRA_PRDCT CP, EXISTENCIAS E WHERE CP.N_PEDIDO = ? AND CP.ID_prod = ? AND CP.ID_prod = E.Id_prod AND CP.Cantidad <= E.Stock GROUP BY CP.Id_prod" ;
 		int cant = 0;
 		int id_alm = 0;
-		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt2, NULL) ;
-		sqlite3_bind_int(stmt2, 1, n_ped);
-		sqlite3_bind_int(stmt2, 2, id_prod);
+		sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+		sqlite3_bind_int(stmt, 1, n_ped);
+		sqlite3_bind_int(stmt, 2, id_prod);
 		do {
-			result = sqlite3_step(stmt2);
+			result = sqlite3_step(stmt);
 			if (result == SQLITE_ROW) {
 				if (j == -1) {
-					cant = -(int)sqlite3_column_int(stmt2, 1);
-					id_alm = (int)sqlite3_column_int(stmt2, 2);
+					cant = -(int)sqlite3_column_int(stmt, 1);
+					id_alm = (int)sqlite3_column_int(stmt, 2);
 				}else{
-					printf("Producto: %i --> Cantidad: %i, Almacen: %i --> Stock: %i\n", (int)sqlite3_column_int(stmt2, 0), (int)sqlite3_column_int(stmt2, 1), (int)sqlite3_column_int(stmt2, 2), (int)sqlite3_column_int(stmt2, 3));
+//					printf("Producto: %i --> Cantidad: %i, Almacen: %i --> Stock: %i\n", (int)sqlite3_column_int(stmt, 0), (int)sqlite3_column_int(stmt, 1), (int)sqlite3_column_int(stmt, 2), (int)sqlite3_column_int(stmt, 3));
 					i++;
 				}
 			}
 
 
 		} while (result == SQLITE_ROW);
-		sqlite3_finalize(stmt2);
+		sqlite3_finalize(stmt);
 		sqlite3_close(db);
 		if (j == -1) {
 			aumentarStock(cant, id_prod, id_alm);
+			comprobarStockEs0(id_prod, id_alm);
+			BorrarCompraProd(id_prod, n_ped);
+			EnviarPedido(n_ped);
+			if (i == -1){
+				printf("Enviando pedido...\n");
+				printf("Pedido con Nº %i enviado.\n", n_ped);
+			}
+
 		}
 		return i;
 }
+void comprobarStockEs0(int id_prod, int id_alm){
+			sqlite3_open("Tienda.db", &db);
+			char sql[] = "delete from EXISTENCIAS where Id_prod = ? AND Id_alm = ? AND Stock = 0";
+			sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-void comprobarStockPedido(){
+			sqlite3_bind_int(stmt, 1, id_prod);
+			sqlite3_bind_int(stmt, 2, id_alm);
+
+			result = sqlite3_step(stmt);
+			if (result != SQLITE_DONE)
+			{
+				printf("Error borrando stock\n");
+			}else
+			{
+				printf("Stock del producto %i en el almacen %i borrado\n", id_prod, id_alm);
+			}
+			sqlite3_finalize(stmt);
+
+			sqlite3_close(db);
 
 }

@@ -12,7 +12,14 @@
 sqlite3 *db;
 
 int main(void) {
-	CompraProducto* cp = productosPedido(1);
+//	CompraProducto cp = {3, 5, 1};
+//	CompraProducto cp1 = {3, 6, 1};
+//	CompraProducto cp2 = {3, 7, 1};
+//	insertarCompraProd(cp);
+//	insertarCompraProd(cp1);
+//	insertarCompraProd(cp2);
+	comprobarStockEs0(3, 5);
+
 	char opcion;
 	char opcion2;
 	char opcion3;
