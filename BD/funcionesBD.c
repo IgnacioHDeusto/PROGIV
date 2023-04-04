@@ -318,9 +318,9 @@ void aumentarStock(int stock, int id_prod, int id_alm) {
 			rc = sqlite3_exec(db, query, 0, 0, &error);
 
 			if (rc == SQLITE_OK) {
-			printf("Almacen insertado correctamente\n");
+			printf("Stock insertado correctamente\n");
 				} else {
-				printf("Error al insertar el almacen: %s\n", error);
+				printf("Error al insertar el stock: %s\n", error);
 						}
 				}
 	} else {
@@ -374,6 +374,25 @@ void ConsultarStock() {
 			} while (result == SQLITE_ROW);
 
 			sqlite3_finalize(stmt);
+}
+
+void borrarStock(int id_prod, int id_alm){
+		sqlite3_open("Tienda.db", &db);
+		char sql[] = "delete from EXISTENCIAS where Id_prod = ? AND Id_alm = ?";
+		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
+
+		sqlite3_bind_int(stmt, 1, id_prod);
+		sqlite3_bind_int(stmt, 2, id_alm);
+
+		result = sqlite3_step(stmt);
+		if (result != SQLITE_DONE)
+		{
+			printf("Error borrando stock\n");
+		}else
+		{
+			printf("Stock del producto %i en el almacen %i borrado\n", id_prod, id_alm);
+		}
+
 }
 
 void insertarPedido(Pedido ped){

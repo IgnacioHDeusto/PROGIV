@@ -175,7 +175,7 @@ int main(void) {
 															break;
 														case '6':
 															//AUMENTAR STOCK
-															printf("AUMENTAR STOCK:");
+															menuAumentarStock();
 															break;
 
 														case 'q':

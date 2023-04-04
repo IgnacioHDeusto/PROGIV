@@ -37,6 +37,8 @@ void ListaAlmacenes();
 
 void aumentarStock(int stock, int id_prod, int id_alm);
 
+void borrarStock(int id_prod, int id_alm);
+
 int comprobarStock(int id_prod, int id_alm);
 
 void ConsultarStock();
