@@ -14,8 +14,8 @@ typedef struct {
 } Pedido;
 
 typedef struct {
-    int n_pedido;
     int id_producto;
+    int n_pedido;
     int cant;
 } CompraProducto;
 

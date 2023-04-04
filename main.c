@@ -12,6 +12,7 @@
 sqlite3 *db;
 
 int main(void) {
+	CompraProducto* cp = productosPedido(1);
 	char opcion;
 	char opcion2;
 	char opcion3;
@@ -207,14 +208,13 @@ int main(void) {
 
 														case '3':
 															//ENVIAR PEDIDO
-															printf("ENVIAR PEDIDO:\n");
 															menuEnviarPedido();
 															break;
 														case '4':
 															//CONSULTAR STOCK
 															printf("\n");
 															printf("-------------------\n");
-															printf("LISTA DE STOCK:");
+															printf("LISTA DE STOCK:\n");
 															printf("-------------------\n");
 															ConsultarStock();
 															break;

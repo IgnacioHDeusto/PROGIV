@@ -308,23 +308,36 @@ void menuAumentarStock(){
 }
 
 void menuEnviarPedido(){
+	fflush(stdin);
 	listaPedidos();
 
 	printf("\n-------------------\n");
-	printf("ENVIAR PEDIDO:");
+	printf("ENVIAR PEDIDO:\n");
 	printf("-------------------\n");
 
-	printf("Introduce el Nº que quieres enviar:");
+	printf("Introduce el Nº que quieres enviar:\n");
 	int n_ped = 0;
 	fflush(stdout);
 	scanf("%i", &n_ped);
-	printf("¿Confirmar envio? (s/n)");
+	printf("¿Confirmar envio? (s/n)\n");
 	char conf[20];
 	fflush(stdout);
 	scanf("%s", conf);
-	if (strcmp(conf, "s")) {
-		printf("Enviando pedido...");
-		fflush(stdin);
-		BorrarPedido(n_ped);
+	fflush(stdin);
+	if (strcmp(conf, "s") == 0) {
+		int comp = comprobarPedido(n_ped);
+		if (comp == 0){
+				printf("No existe ese pedido");
+		}else {
+			printf("Enviando pedido...\n");
+//			verProductos
+//			while(){
+//				comprobarStock;
+//			}
+
+
+			EnviarPedido(n_ped);
+		}
+
 	}
 }

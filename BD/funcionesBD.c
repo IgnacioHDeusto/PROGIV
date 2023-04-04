@@ -516,7 +516,7 @@ void listaPedidos(){
 				sqlite3_close(db);
 }
 
-void BorrarPedido(int id)
+void EnviarPedido(int id)
 {
 	sqlite3_open("Tienda.db", &db);
 	char sql[] = "delete from PEDIDO where N_PEDIDO = ?";
@@ -537,6 +537,102 @@ void BorrarPedido(int id)
 	sqlite3_close(db);
 }
 
-void EnviarPedido(){
+int comprobarPedido(int n_ped) {
+	int resultado = 0;
 
+	sqlite3_open("Tienda.db", &db);
+
+	char sql[] = "SELECT * FROM PEDIDO WHERE N_PEDIDO = ?";
+
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+	sqlite3_bind_int(stmt, 1, n_ped);
+
+	result = sqlite3_step(stmt);
+
+	if(result == SQLITE_ROW) {
+		resultado = 1;
+	} else {
+		resultado = 0;
+	}
+
+    sqlite3_finalize(stmt);
+
+    sqlite3_close(db);
+
+    return resultado;
+}
+
+CompraProducto* productosPedido(int n_ped){
+	sqlite3_open("Tienda.db", &db);
+	char sql[] = "select * from COMPRA_PRDCT WHERE N_PEDIDO = ?";
+	int i = 0;
+
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+	sqlite3_bind_int(stmt, 1, n_ped);
+	printf("Mostrando productos del pedido %i:\n", n_ped);
+	CompraProducto* Compra_prod = malloc(sizeof(CompraProducto)*100);
+
+	do {
+		result = sqlite3_step(stmt);
+
+		if (result == SQLITE_ROW) {
+			CompraProducto p = {(int) sqlite3_column_int(stmt, 0), (int) sqlite3_column_int(stmt, 1), (int) sqlite3_column_int(stmt, 2)};
+			Compra_prod[i] = p;
+			i++;
+		}
+	} while (result == SQLITE_ROW);
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+
+	return Compra_prod;
+}
+
+void insertarCompraProd(CompraProducto cp) {
+    sqlite3* db;
+    char error = 0;
+    int rc;
+
+    rc = sqlite3_open("Tienda.db", &db);
+
+    if (rc == SQLITE_OK) {
+    printf("Conexión establecida\n");
+
+    char query[400];
+    sprintf(query, "INSERT INTO COMPRA_PRDCT ( ID_prod, N_PEDIDO, Cantidad) VALUES ('%i', '%i', '%i')", cp.id_producto, cp.n_pedido, cp.cant);
+
+    rc = sqlite3_exec(db, query, 0, 0, &error);
+
+    if (rc == SQLITE_OK) {
+    printf("Compra de producto insertado correctamente\n");
+        } else {
+        printf("Error al insertar el compra de producto: %s\n", error);
+                }
+        } else {
+        printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
+               }
+
+        sqlite3_finalize(stmt);
+        sqlite3_close(db);
+
+}
+void BorrarCompraProd(int id_prod, int n_ped){
+	sqlite3_open("Tienda.db", &db);
+			char sql[] = "delete from COMPRA_PRDCT WHERE ID_prod = ? AND N_PEDIDO = ?";
+			sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
+
+			sqlite3_bind_int(stmt, 1, id_prod);
+			sqlite3_bind_int(stmt, 2, n_ped);
+
+			result = sqlite3_step(stmt);
+			if (result != SQLITE_DONE)
+			{
+				printf("Error borrando compra de producto\n");
+			}else
+			{
+				printf("Compra del producto %i del pedido %i borrado\n", id_prod, n_ped);
+			}
+			sqlite3_finalize(stmt);
+
+			sqlite3_close(db);
 }

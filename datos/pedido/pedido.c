@@ -32,3 +32,6 @@ void imprimirCarrito(Carrito* c)
 	}
 
 }
+void imprimirCompraProd(CompraProducto cp){
+	printf("%i, %i, %i", cp.n_pedido, cp.id_producto, cp.cant);
+}

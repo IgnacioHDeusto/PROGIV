@@ -49,8 +49,11 @@ void insertarPedido(Pedido ped);
 
 void listaPedidos();
 
-void BorrarPedido(int id);
+void EnviarPedido(int id);
 
+int comprobarPedido(int n_ped);
+
+void BorrarCompraProd(int id_prod, int n_ped);
 //void crearProducto(char* nombre, char* descripcion, int categoria, int precio, char* tamanyo);
 
 #endif /* BD_FUNCIONESBD_H_ */
