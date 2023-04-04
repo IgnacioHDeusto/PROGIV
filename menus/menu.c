@@ -164,7 +164,7 @@ char menuCarrito(){
 	printf("------------------\n");
     printf("CARRITO\n");
     printf("------------------\n");
-    printf("1.Confirmar el pedido\n");
+    printf("1. Confirmar el pedido\n");
     printf("2. Eliminar producto del carrito\n");
     printf("3. Cancelar \n");
     printf("\n");
@@ -288,22 +288,22 @@ void menuEliminarProductoGestor(){
 }
 
 void menuAumentarStock(){
-		printf("\n-------------------\n");
-		printf("AUMENTAR STOCK:\n");
-		printf("-------------------\n");
-	    printf("Stock:\n");
-	    fflush(stdout);
-	    int stock = 0;
-	    scanf("%i", &stock);
-	    printf("ID de producto::\n");
-	    fflush(stdout);
-	    int id_prod = 0;
-	    scanf("%i", &id_prod);
-	    printf("ID de almacen:\n");
-	    fflush(stdout);
-	    int id_alm = 0;
-	    scanf("%i", &id_alm);
+	printf("\n-------------------\n");
+	printf("AUMENTAR STOCK:\n");
+	printf("-------------------\n");
+	printf("Stock:\n");
+	fflush(stdout);
+	int stock = 0;
+	scanf("%i", &stock);
+	printf("ID de producto::\n");
+	fflush(stdout);
+	int id_prod = 0;
+	scanf("%i", &id_prod);
+	printf("ID de almacen:\n");
+	fflush(stdout);
+	int id_alm = 0;
+	scanf("%i", &id_alm);
 
-	    fflush(stdin);
-	    aumentarStock(stock, id_prod, id_alm);
+	fflush(stdin);
+	aumentarStock(stock, id_prod, id_alm);
 }

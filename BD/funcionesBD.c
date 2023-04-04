@@ -40,8 +40,36 @@ void insertarCategoria(Categoria c) {
    	        sqlite3_finalize(stmt);
    	        sqlite3_close(db);
 }
+void insertarCiudad(Ciudad ciu) {
+	 sqlite3 *db;
+	 char* error = 0;
+	 int rc;
 
-void insertarProvincias(Provincia prov) {
+	        rc = sqlite3_open("Tienda.db", &db);
+
+	        if (rc == SQLITE_OK) {
+	            printf("Conexión establecida\n");
+
+	            char query[400];
+	            sprintf(query, "INSERT INTO CIUDAD ( Codigo_ciu, Nombre_ciu, Codigo_prov) VALUES ('%d', '%s', '%d')", ciu.codigo, ciu.nombre, ciu.cod_provincia);
+
+	            rc = sqlite3_exec(db, query, 0, 0, &error);
+
+	            if (rc == SQLITE_OK) {
+	                printf("Ciudad insertada correctamente\n");
+	            } else {
+	                printf("Error al insertar ciudad: %s\n", error);
+	            }
+	        } else {
+	            printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
+	        }
+
+	        sqlite3_finalize(stmt);
+	        sqlite3_close(db);
+
+	}
+
+void insertarProvincia(Provincia prov) {
 	 sqlite3 *db;
 	 char* error = 0;
 	 int rc;
@@ -57,7 +85,7 @@ void insertarProvincias(Provincia prov) {
 	            rc = sqlite3_exec(db, query, 0, 0, &error);
 
 	            if (rc == SQLITE_OK) {
-	                printf("Provincia insertado correctamente\n");
+	                printf("Provincia insertada correctamente\n");
 	            } else {
 	                printf("Error al insertar provincia: %s\n", error);
 	            }
@@ -69,6 +97,24 @@ void insertarProvincias(Provincia prov) {
 	        sqlite3_close(db);
 
 	}
+
+void BorrarProvincia(int id){
+	sqlite3_open("Tienda.db", &db);
+		char sql[] = "delete from PROVINCIA where Codigo_prov = ?";
+		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
+
+		sqlite3_bind_int(stmt, 1, id);
+
+		result = sqlite3_step(stmt);
+		if (result != SQLITE_DONE)
+		{
+			printf("Error borrando provincia\n");
+		}else
+		{
+			printf("Provincia con ID %i borrado\n", id);
+		}
+
+}
 
 void crearGestor(Trabajador t) {
 	 sqlite3 *db;

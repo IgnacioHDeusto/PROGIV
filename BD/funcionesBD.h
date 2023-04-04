@@ -9,9 +9,11 @@
 
 void insertarCategoria(Categoria c);
 
-void insertarCiudades(Ciudad ci);
+void insertarCiudad(Ciudad ci);
 
-void insertarProvincias(Provincia prov);
+void insertarProvincia(Provincia prov);
+
+void BorrarProvincia(int id);
 
 void selectCategoria(int ct);
 

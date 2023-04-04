@@ -10,7 +10,7 @@ typedef struct {
 }Almacen;
 
 typedef struct {
-	char* codigo;
+	int codigo;
 	char* nombre;
     int cod_provincia;
 } Ciudad;
