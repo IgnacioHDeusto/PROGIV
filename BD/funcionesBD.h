@@ -5,6 +5,7 @@
 #include "../sqlite/sqlite3.h"
 #include "../datos/producto/producto.h"
 #include "../datos/trabajador/trabajador.h"
+#include "../datos/pedido/pedido.h"
 
 void insertarCategoria(Categoria c);
 
@@ -31,6 +32,20 @@ void BorrarProducto(int id);
 void insertarAlmacen(Almacen al);
 
 void BorrarAlmacen(int id);
+
+void ListaAlmacenes();
+
+void aumentarStock(int stock, int id_prod, int id_alm);
+
+int comprobarStock(int id_prod, int id_alm);
+
+void ConsultarStock();
+
+void insertarPedido(Pedido ped);
+
+void listaPedidos();
+
+void BorrarPedido(int id);
 
 //void crearProducto(char* nombre, char* descripcion, int categoria, int precio, char* tamanyo);
 

@@ -5,7 +5,7 @@
 
 void imprimirAlmacen (Almacen a)
 {
-    printf("[Almacen : %s, TLF: %s, DIR: %i]",a.nombre, a.telefono, a.direccion);
+    printf("[Almacen : %s, TLF: %i, DIR: %i]",a.nombre, a.telefono, a.direccion);
 }
 
 void imprimirCiudad (Ciudad ci) {

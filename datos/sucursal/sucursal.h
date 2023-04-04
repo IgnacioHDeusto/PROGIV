@@ -5,7 +5,7 @@ typedef struct {
     int id;
     char* nombre;
     char* direccion;
-    char* telefono;
+    int telefono;
     int cod_ciu;
 }Almacen;
 

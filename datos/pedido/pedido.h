@@ -2,17 +2,15 @@
 #define DATOS_PEDIDO_PEDIDO_H_
 
 typedef struct {
-    int dia;
-    int mes;
-    int anyo;
+    char* dia;
+    char* mes;
+    char* anyo;
 }Fecha;
 
 typedef struct {
     int n_pedido;
     Fecha fecha;
     char* dni;
-    int cant;
-    int id_prod;
 } Pedido;
 
 typedef struct {
@@ -26,6 +24,8 @@ typedef struct {
     Pedido* pedido;
     int numPedidos;
 } Carrito;
+
+char* fechaToChar(Fecha f);
 
 void imprimirFecha(Fecha f);
 

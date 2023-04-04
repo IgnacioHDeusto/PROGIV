@@ -145,7 +145,7 @@ int main(void) {
 														switch(opcion8){
 														case '1':
 															//LISTA PRODUCTOS
-															printf("-------------------\n");
+															printf("\n-------------------\n");
 															printf("LISTA DE PRODUCTOS:\n");
 															printf("-------------------\n");
 															ListaProductos();
@@ -160,15 +160,22 @@ int main(void) {
 															break;
 														case '4':
 															//CONSULTAR ALMACENES´
-															printf("LISTA DE ALMACENES:");
+															printf("\n");
+															printf("-------------------\n");
+															printf("LISTA DE ALMACENES:\n");
+															printf("-------------------\n");
+															ListaAlmacenes();
 															break;
 														case '5':
 															//CONSULTAR STOCK
+															printf("\n-------------------\n");
 															printf("LISTA DE STOCK:");
+															printf("-------------------\n");
+															ConsultarStock();
 															break;
 														case '6':
 															//AUMENTAR STOCK
-															printf("AUMENTAR DE STOCK:");
+															printf("AUMENTAR STOCK:");
 															break;
 
 														case 'q':
@@ -180,13 +187,12 @@ int main(void) {
 													break;
 												case '2':
 													//GESTIONAR USUARIOS
-													menuGestionUsuariosGestor();
 													do{
 														opcion9 = menuGestionUsuariosGestor();
 														switch(opcion9){
 
 														case '1':
-															printf("------------------\n");
+															printf("\n------------------\n");
 															printf("LISTA DE USUARIOS:\n");
 															printf("------------------\n");
 															MostrarTrabajadores();
@@ -194,12 +200,23 @@ int main(void) {
 
 														case '2':
 															//INRFORMACION PEDIDO
-															printf("INFORMACION DE PEDIDOS:");
+															printf("\n");
+															printf("INFORMACION DE PEDIDOS:\n");
+															listaPedidos();
 															break;
 
 														case '3':
 															//ENVIAR PEDIDO
-															printf("AUMENTAR DE STOCK:");
+															printf("ENVIAR PEDIDO:\n");
+															break;
+
+														case '4':
+															//CONSULTAR STOCK
+															printf("\n");
+															printf("-------------------\n");
+															printf("LISTA DE STOCK:");
+															printf("-------------------\n");
+															ConsultarStock();
 															break;
 
 														case 'q':

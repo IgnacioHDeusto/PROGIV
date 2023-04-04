@@ -62,15 +62,15 @@ int menuInicioSesionGestor(){
     printf("INICIO DE SESION GESTOR\n");
     printf("------------------\n");
     printf("Nombre de usuario:\n");
+    char nom[20];
     fflush(stdout);
-    char linea[20];
-    fgets(linea, 20, stdin);
+    scanf("%s", nom);
     printf("Constraseña:\n");
-    printf("\n");
+    char contr[20];
     fflush(stdout);
-    char linea1[20];
-    fgets(linea1, 20,stdin);
-    resultado = comprobarUsuario(linea, linea1);
+    scanf("%s", contr);
+    fflush(stdin);
+    resultado = comprobarUsuario(nom, contr);
     return resultado;
 }
 char menuAplicacionGestor(){
@@ -180,23 +180,16 @@ void menuCrearCuentaGestor(){
 	printf("------------------\n");
     printf("CREAR NUEVA CUENTA DE GESTOR\n");
     printf("------------------\n");
-    printf("Cod_Trabajador:\n");
-    fflush(stdout);
-    char linea[20];
-    fgets(linea, 20, stdin);
     printf("Nombre trabajador:\n");
+    char nombre[20];
     fflush(stdout);
-    char linea1[20];
-    fgets(linea1, 20,stdin);
-    printf("Apellido:\n");
+    scanf("%s", nombre);
+    printf("Contraseña trabajador:\n");
+    char contrasena[20];
     fflush(stdout);
-    char linea2[20];
-    fgets(linea2, 20,stdin);
-    printf("Contraseña:\n");
-    fflush(stdout);
-    char linea3[20];
-    fgets(linea3, 20,stdin);
-    Trabajador t = {NULL, linea1, linea3};
+    scanf("%s", contrasena);
+    Trabajador t = {NULL, nombre, contrasena};
+    fflush(stdin);
     crearGestor(t);
 }
 
@@ -219,8 +212,9 @@ char menuGestionProductosGestor(){
 	    printf("1. Lista productos\n");
 	    printf("2. Anadir productos\n");
 	    printf("3. Eliminar productos \n");
-	    printf("4. Consultar stock \n");
-	    printf("5. Aumentar stock \n");
+	    printf("4. Consultar Almacenes \n");
+	    printf("5. Consultar stock \n");
+	    printf("6. Aumentar stock \n");
 	    printf("Pulsar 'q' para salir \n");
 	    printf("\n");
 	    printf("Opcion: ");
