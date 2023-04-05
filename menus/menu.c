@@ -303,6 +303,8 @@ void menuEliminarProductoGestor(){
 			printf("\nNo existe ese producto\n");
 	}else {
 		BorrarProducto(id);
+		BorrarStock(id);
+		BorrarProdCompra(id);
 	}
 
 }

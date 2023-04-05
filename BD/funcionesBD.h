@@ -82,5 +82,8 @@ int comprobarCategoria(int cod_cat);
 
 void listaCategorias();
 
+void BorrarStock(int id_prod);
+
+void BorrarProdCompra(int id_prod);
 
 #endif /* BD_FUNCIONESBD_H_ */

@@ -452,6 +452,23 @@ void ConsultarStock() {
 			sqlite3_finalize(stmt);
 }
 
+void BorrarStock(int id_prod){
+	char sql[] = "delete from EXISTENCIAS where Id_prod = ?";
+	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
+
+	sqlite3_bind_int(stmt, 1, id_prod);
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE)
+	{
+		printf("Error borrando stock\n");
+	}else
+	{
+		printf("Stock del producto %i en el almacen %i borrado\n", id_prod);
+	}
+	sqlite3_finalize(stmt);
+}
+
 void borrarStock(int id_prod, int id_alm){
 		char sql[] = "delete from EXISTENCIAS where Id_prod = ? AND Id_alm = ?";
 		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
@@ -693,6 +710,19 @@ void BorrarCompraProd(int id_prod, int n_ped){
 				printf("Error borrando compra de producto\n");
 			}
 			sqlite3_finalize(stmt);
+}
+void BorrarProdCompra(int id_prod){
+	char sql[] = "delete from COMPRA_PRDCT WHERE ID_prod = ?";
+	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
+
+	sqlite3_bind_int(stmt, 1, id_prod);
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE)
+	{
+		printf("Error borrando compra de producto\n");
+	}
+	sqlite3_finalize(stmt);
 }
 int ComprobarStockPedido(int id_prod, int n_ped, int j, int i){
 		char sql[] = "SELECT CP.ID_prod, CP.Cantidad, E.Id_alm, E.Stock FROM COMPRA_PRDCT CP, EXISTENCIAS E WHERE CP.N_PEDIDO = ? AND CP.ID_prod = ? AND CP.ID_prod = E.Id_prod AND CP.Cantidad <= E.Stock GROUP BY CP.Id_prod" ;
