@@ -13,7 +13,6 @@ sqlite3 *db;
 
 int main(void) {
 	iniciarBD();
-
 	char opcion;
 	char opcion2;
 	char opcion3;
@@ -155,6 +154,7 @@ int main(void) {
 														case '2':
 															//ANADIR PRODUCTOS
 															menuAnadirProductoGestor();
+															fflush(stdout);
 															break;
 														case '3':
 															//EDITAR PRECIO
@@ -175,7 +175,7 @@ int main(void) {
 														case '6':
 															//CONSULTAR STOCK
 															printf("\n-------------------\n");
-															printf("LISTA DE STOCK:");
+															printf("LISTA DE STOCK:\n");
 															printf("-------------------\n");
 															ConsultarStock();
 															break;
@@ -199,23 +199,28 @@ int main(void) {
 
 														case '1':
 															printf("\n------------------\n");
-															printf("LISTA DE USUARIOS:\n");
+															printf("LISTA DE EMPLEADOS:\n");
 															printf("------------------\n");
 															MostrarTrabajadores();
 															break;
-
 														case '2':
+															printf("\n------------------\n");
+															printf("LISTA DE CLIENTES:\n");
+															printf("------------------\n");
+															MostrarClientes();
+															break;
+														case '3':
 															//INRFORMACION PEDIDO
 															printf("\n");
 															printf("INFORMACION DE PEDIDOS:\n");
 															listaPedidos();
 															break;
 
-														case '3':
+														case '4':
 															//ENVIAR PEDIDO
 															menuEnviarPedido();
 															break;
-														case '4':
+														case '5':
 															//CONSULTAR STOCK
 															printf("\n");
 															printf("-------------------\n");

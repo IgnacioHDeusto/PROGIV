@@ -6,6 +6,7 @@
 #include "../datos/producto/producto.h"
 #include "../datos/trabajador/trabajador.h"
 #include "../datos/pedido/pedido.h"
+#include "../datos/cliente/cliente.h"
 
 char* load_config(char* filename, char* buscar);
 
@@ -67,6 +68,19 @@ void comprobarStockEs0(int id_prod, int id_alm);
 //void crearProducto(char* nombre, char* descripcion, int categoria, int precio, char* tamanyo);
 void editarPrecio(int id_prod, int precio);
 
+void insertarCliente(Cliente clt);
+
+void MostrarClientes();
+
+int comprobarAlmacen(int id_alm);
+
+int comprobarProducto(int id_prod);
+
+int comprobarCiudad(int cod_ciu);
+
+int comprobarCategoria(int cod_cat);
+
+void listaCategorias();
 
 
 #endif /* BD_FUNCIONESBD_H_ */

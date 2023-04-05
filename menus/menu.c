@@ -174,24 +174,6 @@ char menuCarrito(){
     return *linea;
 }
 
-void menuCrearCuentaGestor(){
-	printf("\n");
-	printf("------------------\n");
-    printf("CREAR NUEVA CUENTA DE GESTOR\n");
-    printf("------------------\n");
-    printf("Nombre trabajador:\n");
-    char nombre[20];
-    fflush(stdout);
-    scanf("%s", nombre);
-    printf("Contraseña trabajador:\n");
-    char contrasena[20];
-    fflush(stdout);
-    scanf("%s", contrasena);
-    Trabajador t = {NULL, nombre, contrasena};
-    fflush(stdin);
-    crearGestor(t);
-}
-
 void menuAnadirProductoCliente(){
 		printf("------------------\n");
 	    printf("ELIGE UN PRODUCTO\n");
@@ -229,10 +211,11 @@ char menuGestionUsuariosGestor(){
 			printf("------------------\n");
 			printf("GESTION USUARIOS \n");
 		    printf("------------------\n");
-		    printf("1. Lista usuarios\n");
-		    printf("2. Info pedidos\n");
-		    printf("3. Enviar pedido \n");
-		    printf("4. Consultar stock \n");
+		    printf("1. Lista empleados\n");
+		    printf("2. Lista clientes\n");
+		    printf("3. Info pedidos\n");
+		    printf("4. Enviar pedido \n");
+		    printf("5. Consultar stock \n");
 		    printf("Pulsar 'q' para salir \n");
 		    printf("\n");
 		    printf("Opcion: ");
@@ -241,22 +224,40 @@ char menuGestionUsuariosGestor(){
 		    fgets(linea, 10,stdin);
 		    return *linea;
 }
+void menuCrearCuentaGestor(){
+	printf("\n");
+	printf("------------------\n");
+    printf("CREAR NUEVA CUENTA DE GESTOR\n");
+    printf("------------------\n");
+    printf("Nombre trabajador:\n");
+    char nombre[20];
+    fflush(stdout);
+    scanf("%s", nombre);
+    printf("Contraseña trabajador:\n");
+    char contrasena[20];
+    fflush(stdout);
+    scanf("%s", contrasena);
+    Trabajador t = {NULL, nombre, contrasena};
+    fflush(stdin);
+    crearGestor(t);
+}
+
 void menuAnadirProductoGestor(){
 		printf("\n");
 		printf("------------------\n");
 	    printf("ANADIR PRODUCTO\n");
 	    printf("------------------\n");
 	    printf("Nombre:\n");
-	    fflush(stdout);
 	    char nombre[20];
+	    fflush(stdout);
 	    scanf("%s", nombre);
 	    printf("Descripcion:\n");
-	    fflush(stdout);
 	    char desc[20];
+	    fflush(stdout);
 	    scanf("%s", desc);
 	    printf("Cod_categoria:\n");
-	    fflush(stdout);
 	    int categoria = 0;
+	    fflush(stdout);
 	    scanf("%i", &categoria);
 	    printf("Precio:\n");
 	    float precio = 0;
@@ -268,12 +269,26 @@ void menuAnadirProductoGestor(){
 	   	scanf("%s", tamanyo);
 
 	    Producto p = {NULL, nombre, desc, categoria, precio, tamanyo};
-	   // printf("%i,%i,%s",categoria, precio, linea5);
-	    crearProducto(p);
-	   // crearProducto(linea1, linea2, categoria, precio, linea5);
+	    int comp = comprobarCategoria(categoria);
+		if (comp == 0){
+				printf("\nNo existe esa categoria\n");
+				printf("Estas son las categorias que hay:\n");
+				fflush(stdin);
+				listaCategorias();
+		}else {
+			if (precio < 0) {
+				printf("\nEl precio tiene que ser positivo\n");
+				fflush(stdin);
+			} else {
+				fflush(stdin);
+				crearProducto(p);
+			}
+		}
+
 }
 
 void menuEliminarProductoGestor(){
+	ListaProductos();
 	printf("\n");
 	printf("------------------\n");
 	printf("ELIMINAR PRODUCTOS\n");
@@ -283,10 +298,19 @@ void menuEliminarProductoGestor(){
 	fflush(stdout);
 	scanf("%i", &id);
 	fflush(stdin);
-	BorrarProducto(id);
+	int comp = comprobarProducto(id);
+	if (comp == 0){
+			printf("\nNo existe ese producto\n");
+	}else {
+		BorrarProducto(id);
+	}
+
 }
 
 void menuAumentarStock(){
+	ListaAlmacenes();
+	printf("\n");
+	ConsultarStock();
 	printf("\n-------------------\n");
 	printf("AUMENTAR STOCK:\n");
 	printf("-------------------\n");
@@ -294,7 +318,7 @@ void menuAumentarStock(){
 	fflush(stdout);
 	int stock = 0;
 	scanf("%i", &stock);
-	printf("ID de producto::\n");
+	printf("ID de producto:\n");
 	fflush(stdout);
 	int id_prod = 0;
 	scanf("%i", &id_prod);
@@ -304,7 +328,23 @@ void menuAumentarStock(){
 	scanf("%i", &id_alm);
 
 	fflush(stdin);
-	aumentarStock(stock, id_prod, id_alm);
+	int comp = comprobarProducto(id_prod);
+	if (comp == 0){
+			printf("\nNo existe ese producto");
+			ListaProductos();
+	}else {
+		int comp = comprobarAlmacen(id_alm);
+		if (comp == 0){
+				printf("\nNo existe ese almacen\n");
+		}else {
+			if (stock < 0) {
+				aumentarStock(stock, id_prod, id_alm);
+				comprobarStockEs0(id_prod, id_alm);
+			} else {
+				aumentarStock(stock, id_prod, id_alm);
+			}
+		}
+	}
 }
 
 void menuEnviarPedido(){
@@ -327,7 +367,7 @@ void menuEnviarPedido(){
 	if (strcmp(conf, "s") == 0) {
 		int comp = comprobarPedido(n_ped);
 		if (comp == 0){
-				printf("No existe ese pedido");
+				printf("\nNo existe ese pedido\n");
 		}else {
 			int numProd = productosPedido(n_ped);
 		}
@@ -349,5 +389,10 @@ void menuEditarPrecio(){
 	int precio = 0;
 	scanf("%i", &precio);
 	fflush(stdin);
-	editarPrecio(id_prod, precio);
+	int comp = comprobarPedido(id_prod);
+			if (comp == 0){
+					printf("\nNo existe ese producto\n");
+			}else {
+				editarPrecio(id_prod, precio);
+			}
 }

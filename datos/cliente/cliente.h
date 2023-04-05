@@ -6,8 +6,9 @@ typedef struct {
     char* dni;
     char* nombre;
     char* direccion;
-    char* telefono;
+    int telefono;
     int cod_ciudad;
+    char* contrasena;
 } Cliente;
 
 void imprimirCliente();
