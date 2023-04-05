@@ -11,17 +11,62 @@ sqlite3 *db;
 sqlite3_stmt *stmt;
 int result;
 
+char* load_config(char* filename, char* buscar) {
+    FILE* archivo;
+    char linea[100];
+    char* igual;
+    char buscar2[20];
+    fflush(stdout);
+    archivo = fopen(filename, "r");
+
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return NULL;
+    }
+    fflush(stdout);
+    char* resultado = NULL;
+    while (fgets(linea, 100, archivo)) {
+        int i = 0;
+        while (linea[i] != '=') {
+            buscar2[i] = linea[i];
+            i++;
+        }
+        buscar2[i] = '\0';
+
+        if (strcmp(buscar, buscar2) == 0) {
+            igual = strchr(linea, '=');
+            if (igual != NULL) {
+                int longitud = strlen(igual + 1);
+                resultado = (char*) realloc(resultado, longitud * sizeof(char));
+                if (resultado == NULL) {
+                    printf("Error al asignar memoria.\n");
+                    return NULL;
+                }
+                fflush(stdout);
+                strncpy(resultado, igual + 1, longitud);
+                resultado[longitud - 1] = '\0';
+            }
+        }
+    }
+
+    fclose(archivo);
+    fflush(stdout);
+    return resultado;
+}
+void iniciarBD(){
+
+    char*ruta=load_config("ficheros/Config.txt","ruta");
+
+    sqlite3_open(ruta, &db);
+    free(ruta);
+
+}
+
 void insertarCategoria(Categoria c) {
-	sqlite3 *db;
 	char* error = 0;
 	int rc;
 
     char sql[] = "insert into CATEGORIA (Codigo_cat, Nombre_cat ) values (?, ?)";
-
-    rc = sqlite3_open("Tienda.db", &db);
-
-   	        if (rc == SQLITE_OK) {
-   	            printf("Conexión establecida\n");
 
    	            char query[400];
    	            sprintf(query, "INSERT INTO CATEGORIA ( Codigo_cat, Nombre_cat) VALUES ('%d', '%s')", c.codigo, c.nombre);
@@ -33,22 +78,15 @@ void insertarCategoria(Categoria c) {
    	            } else {
    	                printf("Error al insertar Categoria: %s\n", error);
    	            }
-   	        } else {
-   	            printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-   	        }
 
    	        sqlite3_finalize(stmt);
-   	        sqlite3_close(db);
 }
 void insertarCiudad(Ciudad ciu) {
-	 sqlite3 *db;
+
 	 char* error = 0;
 	 int rc;
 
-	        rc = sqlite3_open("Tienda.db", &db);
 
-	        if (rc == SQLITE_OK) {
-	            printf("Conexión establecida\n");
 
 	            char query[400];
 	            sprintf(query, "INSERT INTO CIUDAD ( Codigo_ciu, Nombre_ciu, Codigo_prov) VALUES ('%d', '%s', '%d')", ciu.codigo, ciu.nombre, ciu.cod_provincia);
@@ -60,24 +98,17 @@ void insertarCiudad(Ciudad ciu) {
 	            } else {
 	                printf("Error al insertar ciudad: %s\n", error);
 	            }
-	        } else {
-	            printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-	        }
-
 	        sqlite3_finalize(stmt);
-	        sqlite3_close(db);
+
 
 	}
 
 void insertarProvincia(Provincia prov) {
-	 sqlite3 *db;
+
 	 char* error = 0;
 	 int rc;
 
-	        rc = sqlite3_open("Tienda.db", &db);
 
-	        if (rc == SQLITE_OK) {
-	            printf("Conexión establecida\n");
 
 	            char query[400];
 	            sprintf(query, "INSERT INTO PROVINCIA ( Codigo_prov, Nombre_prov) VALUES ('%d', '%s')", prov.codigo, prov.nombre);
@@ -89,17 +120,10 @@ void insertarProvincia(Provincia prov) {
 	            } else {
 	                printf("Error al insertar provincia: %s\n", error);
 	            }
-	        } else {
-	            printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-	        }
-
 	        sqlite3_finalize(stmt);
-	        sqlite3_close(db);
-
 	}
 
 void BorrarProvincia(int id){
-		sqlite3_open("Tienda.db", &db);
 		char sql[] = "delete from PROVINCIA where Codigo_prov = ?";
 		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
@@ -115,18 +139,14 @@ void BorrarProvincia(int id){
 		}
 		sqlite3_finalize(stmt);
 
-		sqlite3_close(db);
 }
 
 void crearGestor(Trabajador t) {
-	 sqlite3 *db;
+
 	 char* error = 0;
 	 int rc;
 
-		        rc = sqlite3_open("Tienda.db", &db);
 
-		        if (rc == SQLITE_OK) {
-		            printf("Conexión establecida\n");
 
 		            char query[400];
 		            sprintf(query, "INSERT INTO TRABAJADOR ( Cod_trab, Usuario_trab, Contrasena_trab) VALUES (NULL, '%s', '%s')", t.Nombre_trab, t.Contrasena_trab);
@@ -138,23 +158,14 @@ void crearGestor(Trabajador t) {
 		            } else {
 		                printf("Error al insertar trabajador: %s\n", error);
 		            }
-		        } else {
-		            printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-		        }
 
 		        sqlite3_finalize(stmt);
-		        sqlite3_close(db);
 }
 
 void crearProducto(Producto p){
-	     sqlite3 *db;
 		 char* error = 0;
 		 int rc;
-
-			        rc = sqlite3_open("Tienda.db", &db);
-
-			        if (rc == SQLITE_OK) {
-			            printf("Conexión establecida\n");
+		 //char fichero[20] = leerConfig();
 
 			            char query[400];
 			            sprintf(query, "INSERT INTO PRODUCTO ( ID_prod, Nombre_prod, Descripcion, Codigo_cat, Precio, Tamaño) VALUES (NULL, '%s', '%s', '%i', '%i', '%s')", p.nombre, p.descripcion, p.categoria, p.precio, p.tamayo);
@@ -165,19 +176,13 @@ void crearProducto(Producto p){
 			            } else {
 			                printf("Error al insertar producto: %s\n", error);
 			            }
-			        } else {
-			            printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-			        }
 
 			        sqlite3_finalize(stmt);
-			        fflush(stdout);
-			        sqlite3_close(db);
+
 }
 
 int comprobarUsuario(char usuario[], char contrasena[]) {
 	int resultado = 0;
-
-	sqlite3_open("Tienda.db", &db);
 
 	char sql[] = "SELECT * FROM TRABAJADOR WHERE Usuario_trab = ? AND Contrasena_trab = ?";
 
@@ -195,14 +200,11 @@ int comprobarUsuario(char usuario[], char contrasena[]) {
 
     sqlite3_finalize(stmt);
 
-    sqlite3_close(db);
-
     return resultado;
 }
 
-//ARREGLAR
+
 void MostrarTrabajadores() {
-    sqlite3_open("Tienda.db", &db);
     char sql[] = "SELECT * FROM TRABAJADOR";
 
         sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
@@ -219,13 +221,10 @@ void MostrarTrabajadores() {
         printf("\n");
 
         sqlite3_finalize(stmt);
-
-        sqlite3_close(db);
 }
 
 void BorrarTrabajador(int id)
 {
-	sqlite3_open("Tienda.db", &db);
 	char sql[] = "delete from TRABAJADOR where Cod_trab = ?";
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
@@ -240,12 +239,9 @@ void BorrarTrabajador(int id)
 		printf("Trabajador con ID %i borrado\n", id);
 	}
 	sqlite3_finalize(stmt);
-
-	sqlite3_close(db);
 }
 
 void ListaProductos() {
-	sqlite3_open("Tienda.db", &db);
 		char sql[] = "select * from PRODUCTO";
 
 			sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
@@ -260,13 +256,10 @@ void ListaProductos() {
 			} while (result == SQLITE_ROW);
 
 			sqlite3_finalize(stmt);
-
-			sqlite3_close(db);
 }
 
 void BorrarProducto(int id)
 {
-	sqlite3_open("Tienda.db", &db);
 	char sql[] = "delete from PRODUCTO where ID_prod = ?";
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
@@ -282,11 +275,9 @@ void BorrarProducto(int id)
 	}
 
 	sqlite3_finalize(stmt);
-	sqlite3_close(db);
 }
 void BorrarAlmacen(int id)
 {
-	sqlite3_open("Tienda.db", &db);
 	char sql[] = "delete from ALMACEN where Id_alm = ?";
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
@@ -300,19 +291,11 @@ void BorrarAlmacen(int id)
 	{
 		printf("Almacen con ID %i borrado\n", id);
 	}
-
 	sqlite3_finalize(stmt);
-	sqlite3_close(db);
 }
 void insertarAlmacen(Almacen al) {
-    sqlite3* db;
     char error = 0;
     int rc;
-
-    rc = sqlite3_open("Tienda.db", &db);
-
-    if (rc == SQLITE_OK) {
-    printf("Conexión establecida\n");
 
     char query[400];
     sprintf(query, "INSERT INTO ALMACEN ( Id_alm, Nombre, Direccion, Tlf_alm, Codigo_ciu) VALUES (NULL, '%s', '%s', '%i', '%i')", al.nombre, al.direccion, al.telefono, al.cod_ciu);
@@ -324,17 +307,11 @@ void insertarAlmacen(Almacen al) {
         } else {
         printf("Error al insertar el almacen: %s\n", error);
                 }
-        } else {
-        printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-               }
-
         sqlite3_finalize(stmt);
-        sqlite3_close(db);
 
 }
 
 void ListaAlmacenes() {
-		sqlite3_open("Tienda.db", &db);
 		char sql[] = "select * from ALMACEN";
 
 			sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
@@ -350,17 +327,12 @@ void ListaAlmacenes() {
 			} while (result == SQLITE_ROW);
 
 			sqlite3_finalize(stmt);
-			sqlite3_close(db);
 }
 
 void aumentarStock(int stock, int id_prod, int id_alm) {
-    sqlite3* db;
     char error = 0;
     int rc;
 
-    rc = sqlite3_open("Tienda.db", &db);
-    if (rc == SQLITE_OK) {
-    printf("Conexión establecida\n");
     int resultado = comprobarStock(id_prod, id_alm);
     if (resultado == 1) {
     	char sql[] = "UPDATE EXISTENCIAS SET Stock = Stock + ? WHERE Id_prod = ? AND Id_alm = ?";
@@ -393,18 +365,12 @@ void aumentarStock(int stock, int id_prod, int id_alm) {
 				printf("Error al insertar el stock: %s\n", error);
 			}
 		}
-	} else {
-        printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-               }
 
         sqlite3_finalize(stmt);
-        sqlite3_close(db);
 
 }
 int comprobarStock(int id_prod, int id_alm) {
 	int resultado = 0;
-
-	sqlite3_open("Tienda.db", &db);
 
 	char sql[] = "SELECT * FROM EXISTENCIAS WHERE Id_prod = ? AND Id_alm = ?";
 
@@ -422,13 +388,10 @@ int comprobarStock(int id_prod, int id_alm) {
 
     sqlite3_finalize(stmt);
 
-    sqlite3_close(db);
-
     return resultado;
 }
 
 void ConsultarStock() {
-		sqlite3_open("Tienda.db", &db);
 		char sql[] = "select * from EXISTENCIAS";
 
 			sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
@@ -444,12 +407,9 @@ void ConsultarStock() {
 			} while (result == SQLITE_ROW);
 
 			sqlite3_finalize(stmt);
-
-			sqlite3_close(db);
 }
 
 void borrarStock(int id_prod, int id_alm){
-		sqlite3_open("Tienda.db", &db);
 		char sql[] = "delete from EXISTENCIAS where Id_prod = ? AND Id_alm = ?";
 		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
@@ -465,19 +425,11 @@ void borrarStock(int id_prod, int id_alm){
 			printf("Stock del producto %i en el almacen %i borrado\n", id_prod, id_alm);
 		}
 		sqlite3_finalize(stmt);
-
-		sqlite3_close(db);
 }
 
 void insertarPedido(Pedido ped){
-	sqlite3* db;
 	    char error = 0;
 	    int rc;
-
-	    rc = sqlite3_open("Tienda.db", &db);
-
-	    if (rc == SQLITE_OK) {
-	    printf("Conexión establecida\n");
 
 	    char query[400];
 	    char* fecha = fechaToChar(ped.fecha);
@@ -490,17 +442,12 @@ void insertarPedido(Pedido ped){
 	        } else {
 	        printf("Error al insertar el almacen: %s\n", error);
 	                }
-	        } else {
-	        printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-	               }
+
 
 	        sqlite3_finalize(stmt);
-	        sqlite3_close(db);
-
 }
 
 void listaPedidos(){
-				sqlite3_open("Tienda.db", &db);
 				char sql[] = "select * from PEDIDO";
 
 				sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
@@ -515,12 +462,10 @@ void listaPedidos(){
 				} while (result == SQLITE_ROW);
 
 				sqlite3_finalize(stmt);
-				sqlite3_close(db);
 }
 
 void EnviarPedido(int id)
 {
-	sqlite3_open("Tienda.db", &db);
 	char sql[] = "delete from PEDIDO where N_PEDIDO = ?";
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
@@ -529,13 +474,10 @@ void EnviarPedido(int id)
 	result = sqlite3_step(stmt);
 
 	sqlite3_finalize(stmt);
-	sqlite3_close(db);
 }
 
 int comprobarPedido(int n_ped) {
 	int resultado = 0;
-
-	sqlite3_open("Tienda.db", &db);
 
 	char sql[] = "SELECT * FROM PEDIDO WHERE N_PEDIDO = ?";
 
@@ -552,15 +494,11 @@ int comprobarPedido(int n_ped) {
 
     sqlite3_finalize(stmt);
 
-    sqlite3_close(db);
-
     return resultado;
 }
 
 int productosPedido(int n_ped){
-	sqlite3_open("Tienda.db", &db);
 	char sql[] = "SELECT P.N_PEDIDO, P.Fecha, P.DNI_clt, CP.ID_prod, CP.Cantidad FROM COMPRA_PRDCT CP, PEDIDO P WHERE CP.N_PEDIDO = ? AND CP.N_PEDIDO = P.N_PEDIDO" ;
-
 	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
 	sqlite3_bind_int(stmt, 1, n_ped);
 	printf("Mostrando productos del pedido %i:\n", n_ped);
@@ -585,7 +523,6 @@ int productosPedido(int n_ped){
 	printf(")\n");
 
 	sqlite3_finalize(stmt);
-	sqlite3_close(db);
 	int f = 0;
 	for (int k = 0; k < i; ++k) {
 		f = ComprobarStockPedido(j[k], n_ped, i, f);
@@ -606,14 +543,8 @@ int productosPedido(int n_ped){
 }
 
 void insertarCompraProd(CompraProducto cp) {
-    sqlite3* db;
     char error = 0;
     int rc;
-
-    rc = sqlite3_open("Tienda.db", &db);
-
-    if (rc == SQLITE_OK) {
-    printf("Conexión establecida\n");
 
     char query[400];
     sprintf(query, "INSERT INTO COMPRA_PRDCT ( ID_prod, N_PEDIDO, Cantidad) VALUES ('%i', '%i', '%i')", cp.id_producto, cp.n_pedido, cp.cant);
@@ -625,16 +556,9 @@ void insertarCompraProd(CompraProducto cp) {
         } else {
         printf("Error al insertar el compra de producto: %s\n", error);
                 }
-        } else {
-        printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-               }
-
         sqlite3_finalize(stmt);
-        sqlite3_close(db);
-
 }
 void BorrarCompraProd(int id_prod, int n_ped){
-	sqlite3_open("Tienda.db", &db);
 			char sql[] = "delete from COMPRA_PRDCT WHERE ID_prod = ? AND N_PEDIDO = ?";
 			sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
@@ -647,11 +571,8 @@ void BorrarCompraProd(int id_prod, int n_ped){
 				printf("Error borrando compra de producto\n");
 			}
 			sqlite3_finalize(stmt);
-
-			sqlite3_close(db);
 }
 int ComprobarStockPedido(int id_prod, int n_ped, int j, int i){
-		sqlite3_open("Tienda.db", &db);
 		char sql[] = "SELECT CP.ID_prod, CP.Cantidad, E.Id_alm, E.Stock FROM COMPRA_PRDCT CP, EXISTENCIAS E WHERE CP.N_PEDIDO = ? AND CP.ID_prod = ? AND CP.ID_prod = E.Id_prod AND CP.Cantidad <= E.Stock GROUP BY CP.Id_prod" ;
 		int cant = 0;
 		int id_alm = 0;
@@ -665,7 +586,6 @@ int ComprobarStockPedido(int id_prod, int n_ped, int j, int i){
 					cant = -(int)sqlite3_column_int(stmt, 1);
 					id_alm = (int)sqlite3_column_int(stmt, 2);
 				}else{
-//					printf("Producto: %i --> Cantidad: %i, Almacen: %i --> Stock: %i\n", (int)sqlite3_column_int(stmt, 0), (int)sqlite3_column_int(stmt, 1), (int)sqlite3_column_int(stmt, 2), (int)sqlite3_column_int(stmt, 3));
 					i++;
 				}
 			}
@@ -673,7 +593,6 @@ int ComprobarStockPedido(int id_prod, int n_ped, int j, int i){
 
 		} while (result == SQLITE_ROW);
 		sqlite3_finalize(stmt);
-		sqlite3_close(db);
 		if (j == -1) {
 			aumentarStock(cant, id_prod, id_alm);
 			comprobarStockEs0(id_prod, id_alm);
@@ -688,7 +607,6 @@ int ComprobarStockPedido(int id_prod, int n_ped, int j, int i){
 		return i;
 }
 void comprobarStockEs0(int id_prod, int id_alm){
-			sqlite3_open("Tienda.db", &db);
 			char sql[] = "delete from EXISTENCIAS where Id_prod = ? AND Id_alm = ? AND Stock = 0";
 			sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
@@ -704,12 +622,8 @@ void comprobarStockEs0(int id_prod, int id_alm){
 				printf("Stock del producto %i en el almacen %i borrado\n", id_prod, id_alm);
 			}
 			sqlite3_finalize(stmt);
-
-			sqlite3_close(db);
-
 }
 void editarPrecio(int id_prod, int precio){
-	sqlite3_open("Tienda.db", &db);
 	if (precio > 0) {
 		char sql[] = "UPDATE PRODUCTO SET Precio = ? WHERE ID_prod = ?";
 		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
@@ -730,5 +644,6 @@ void editarPrecio(int id_prod, int precio){
 		printf("El precio tiene que ser positivo");
 	}
 	sqlite3_finalize(stmt);
-	sqlite3_close(db);
 }
+
+

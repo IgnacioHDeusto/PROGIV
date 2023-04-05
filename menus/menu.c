@@ -269,7 +269,6 @@ void menuAnadirProductoGestor(){
 
 	    Producto p = {NULL, nombre, desc, categoria, precio, tamanyo};
 	   // printf("%i,%i,%s",categoria, precio, linea5);
-	    fflush(stdin);
 	    crearProducto(p);
 	   // crearProducto(linea1, linea2, categoria, precio, linea5);
 }

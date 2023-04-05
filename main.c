@@ -12,12 +12,7 @@
 sqlite3 *db;
 
 int main(void) {
-//	CompraProducto cp = {3, 5, 1};
-//	CompraProducto cp1 = {3, 6, 1};
-//	CompraProducto cp2 = {3, 7, 1};
-//	insertarCompraProd(cp);
-//	insertarCompraProd(cp1);
-//	insertarCompraProd(cp2);
+	iniciarBD();
 
 	char opcion;
 	char opcion2;
@@ -263,5 +258,6 @@ int main(void) {
 
 		}
 	}while(opcion != 'q');
+	sqlite3_close(db);
 	return 0;
 }

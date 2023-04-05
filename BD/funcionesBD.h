@@ -7,6 +7,10 @@
 #include "../datos/trabajador/trabajador.h"
 #include "../datos/pedido/pedido.h"
 
+char* load_config(char* filename, char* buscar);
+
+void iniciarBD();
+
 void insertarCategoria(Categoria c);
 
 void insertarCiudad(Ciudad ci);
@@ -62,5 +66,7 @@ void ComprobarStockPedido();
 void comprobarStockEs0(int id_prod, int id_alm);
 //void crearProducto(char* nombre, char* descripcion, int categoria, int precio, char* tamanyo);
 void editarPrecio(int id_prod, int precio);
+
+
 
 #endif /* BD_FUNCIONESBD_H_ */
