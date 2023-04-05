@@ -27,6 +27,7 @@ void menuAnadirProductoGestor();
 void menuEliminarProductoGestor();
 void menuAumentarStock();
 void menuEnviarPedido();
+void menuEditarPrecio();
 
 
 

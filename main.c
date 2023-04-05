@@ -18,7 +18,6 @@ int main(void) {
 //	insertarCompraProd(cp);
 //	insertarCompraProd(cp1);
 //	insertarCompraProd(cp2);
-	comprobarStockEs0(3, 5);
 
 	char opcion;
 	char opcion2;
@@ -163,10 +162,14 @@ int main(void) {
 															menuAnadirProductoGestor();
 															break;
 														case '3':
+															//EDITAR PRECIO
+															menuEditarPrecio();
+															break;
+														case '4':
 															//ELIMINAR PRODUCTOS
 															menuEliminarProductoGestor();
 															break;
-														case '4':
+														case '5':
 															//CONSULTAR ALMACENES´
 															printf("\n");
 															printf("-------------------\n");
@@ -174,14 +177,14 @@ int main(void) {
 															printf("-------------------\n");
 															ListaAlmacenes();
 															break;
-														case '5':
+														case '6':
 															//CONSULTAR STOCK
 															printf("\n-------------------\n");
 															printf("LISTA DE STOCK:");
 															printf("-------------------\n");
 															ConsultarStock();
 															break;
-														case '6':
+														case '7':
 															//AUMENTAR STOCK
 															menuAumentarStock();
 															break;

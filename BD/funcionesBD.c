@@ -708,3 +708,27 @@ void comprobarStockEs0(int id_prod, int id_alm){
 			sqlite3_close(db);
 
 }
+void editarPrecio(int id_prod, int precio){
+	sqlite3_open("Tienda.db", &db);
+	if (precio > 0) {
+		char sql[] = "UPDATE PRODUCTO SET Precio = ? WHERE ID_prod = ?";
+		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
+
+		sqlite3_bind_int(stmt, 1, precio);
+		sqlite3_bind_int(stmt, 2, id_prod);
+
+		result = sqlite3_step(stmt);
+
+		if (result != SQLITE_DONE)
+		{
+			printf("Error editando precio \n");
+		}else
+		{
+			printf("El nuevo precio del producto %i es %i\n", id_prod, precio);
+		}
+	} else{
+		printf("El precio tiene que ser positivo");
+	}
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+}

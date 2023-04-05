@@ -210,10 +210,11 @@ char menuGestionProductosGestor(){
 	    printf("------------------\n");
 	    printf("1. Lista productos\n");
 	    printf("2. Anadir productos\n");
-	    printf("3. Eliminar productos \n");
-	    printf("4. Consultar Almacenes \n");
-	    printf("5. Consultar stock \n");
-	    printf("6. Aumentar stock \n");
+	    printf("3. Editar precios\n");
+	    printf("4. Eliminar productos \n");
+	    printf("5. Consultar Almacenes \n");
+	    printf("6. Consultar stock \n");
+	    printf("7. Aumentar stock \n");
 	    printf("Pulsar 'q' para salir \n");
 	    printf("\n");
 	    printf("Opcion: ");
@@ -333,4 +334,21 @@ void menuEnviarPedido(){
 		}
 
 	}
+}
+void menuEditarPrecio(){
+	fflush(stdin);
+	ListaProductos();
+	printf("\n-------------------\n");
+	printf("EDITAR PRECIO:\n");
+	printf("-------------------\n");
+	printf("Introduce el ID del producto que quieras editar el precio:\n");
+	int id_prod = 0;
+	fflush(stdout);
+	scanf("%i", &id_prod);
+	printf("Introduce el nuevo precio del producto %i:\n", id_prod);
+	fflush(stdout);
+	int precio = 0;
+	scanf("%i", &precio);
+	fflush(stdin);
+	editarPrecio(id_prod, precio);
 }
