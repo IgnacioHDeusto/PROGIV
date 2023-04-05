@@ -389,7 +389,7 @@ void menuEditarPrecio(){
 	int precio = 0;
 	scanf("%i", &precio);
 	fflush(stdin);
-	int comp = comprobarPedido(id_prod);
+	int comp = comprobarProducto(id_prod);
 			if (comp == 0){
 					printf("\nNo existe ese producto\n");
 			}else {
